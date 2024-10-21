@@ -15,10 +15,7 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
     let request: HttpRequest<unknown>;
 
     let headers = new HttpHeaders();
-    if(cookiesService.get(EnumCookie.AUTHORIZATION) !== null){
-        headers = headers.set('DOtoken', cookiesService.get(EnumCookie.AUTHORIZATION));
-        headers = headers.set('Authorization', environment.basicAuth);
-    }
+    headers = headers.set('Authorization', environment.basicAuth);
     
 
     request = originalRequest.clone({
