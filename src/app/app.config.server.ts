@@ -5,8 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 
 const serverConfig: ApplicationConfig = {
   providers: [
-    provideServerRendering(),
-    provideHttpClient(),
+    provideServerRendering()
   ]
 };
 
