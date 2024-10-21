@@ -1,0 +1,11 @@
+.app{
+    height: 100%;
+}
+:host::ng-deep {
+    .p-button-secondary {
+        background-color: #FF9E1B;
+    }
+    .p-button-secondary:hover {
+        background: #FF9E1B;
+    }
+  }

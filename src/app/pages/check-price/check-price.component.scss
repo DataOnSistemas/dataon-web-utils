@@ -1,0 +1,23 @@
+.check-price{
+    background-color: #FF9E1B;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.check-text{
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.check-button{
+    height: 50px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF9E1B;
+    background-color: black;
+}

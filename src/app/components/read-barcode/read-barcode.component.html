@@ -1,0 +1,10 @@
+<barcode-scanner-livestream
+    type="ean"
+    [errorFilter]="{ median: 0.08, threshold: 0.1 }"
+    [torch]="false"
+    (valueChanges)="onValueChanges($event)"
+    (started)="(onStarted)">
+</barcode-scanner-livestream>
+<div [hidden]="!barcodeValue">
+{{ barcodeValue }}
+</div>
