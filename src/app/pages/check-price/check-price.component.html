@@ -3,12 +3,17 @@
         Consulta Preço
     </div>
     <div>
-        <div (click)="onTestValidate()" class="check-button">
+        <div (click)="onOpenReadCodeBar()" class="check-button">
             Consultar
         </div>
     </div>
-    <div>
-        {{ product }}
+    <div class="check-product">
+        <div>
+            {{ product }}
+        </div>
+        <div>
+            {{ price }}
+        </div>
     </div>
 </div>
 

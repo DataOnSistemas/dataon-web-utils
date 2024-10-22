@@ -5,7 +5,6 @@ import { Router } from "@angular/router";
 import { inject } from "@angular/core";
 import { EnumCookie } from "../../services/cookies/cookie.enum";
 import { environment } from "../../../environments/environment";
-import { ToastService } from "../../services/toast/toast.service";
 
 export function authInterceptor(originalRequest: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
     const cookiesService = inject(CookiesService);

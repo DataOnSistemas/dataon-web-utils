@@ -10,7 +10,7 @@ import { LoadProductService } from '../../services/loader-product/load-product.s
   imports: [],
   templateUrl: './check-price.component.html',
   styleUrl: './check-price.component.scss',
-  providers: [DialogService]
+  providers: [DialogService, LoadProductService]
 })
 export class CheckPriceComponent implements OnInit{
 
@@ -19,6 +19,7 @@ export class CheckPriceComponent implements OnInit{
   doID: any;
 
   product: any = "";
+  price: any = 0;
 
   constructor(public readonly dialogService: DialogService,
     private readonly route: ActivatedRoute,
@@ -42,17 +43,18 @@ export class CheckPriceComponent implements OnInit{
 
     this.ref.onClose.subscribe((product: any) => {
       if (product) {
-          this.product = product.Descricao + " \n " + product.ValorVendaVista;
+          this.onLoadProduct(product);
       }
       this.ref = undefined;
     });
   }
 
-  onTestValidate(){
-    this.loadProduct.onLoadProduct(this.doID, "7908387101927").subscribe({
+  onLoadProduct(codeBar: any){
+    this.loadProduct.onLoadProduct(this.doID,codeBar).subscribe({
       next: (response) => {
         if(response.RetWm === 'success' && response.obj.ID > 0){
-          this.product = response.obj.Descricao + " \n " + response.obj.ValorVendaVista;
+          this.product = response.obj.Descricao;
+          this.price = "R$ " + parseFloat(response.obj.ValorVendaVista).toFixed(2);
         }
       },
       error: (error) => {

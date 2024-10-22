@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeScannerLivestreamComponent, BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 import { LoadProductService } from '../../services/loader-product/load-product.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -6,6 +6,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 @Component({
   selector: 'app-read-barcode',
   standalone: true,
+  providers: [LoadProductService],
   imports: [
     BarcodeScannerLivestreamModule
   ],
@@ -46,16 +47,6 @@ export class ReadBarcodeComponent implements AfterViewInit, OnInit {
   }
 
   onLoadProduct(cb: any){
-    this.loadProduct.onLoadProduct(this.doID, cb).subscribe({
-      next: (response) => {
-        if(response.RetWm === 'success' && response.obj.ID > 0){
-          this.ref.close(response.obj);
-        }
-        this.ref.close("Falha ao consultar produto: " + response);
-      },
-      error: (error) => {
-        this.ref.close("Falha ao consultar produto: " + error);
-      }
-    })
+    this.ref.close(cb);
   }
 }
