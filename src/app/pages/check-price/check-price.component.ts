@@ -3,6 +3,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ReadBarcodeComponent } from '../../components/read-barcode/read-barcode.component';
 import { ActivatedRoute } from '@angular/router';
 import { LoadProductService } from '../../services/loader-product/load-product.service';
+import { QuaggaComponent } from '../../components/quagga/quagga.component';
 
 @Component({
   selector: 'app-check-price',
@@ -19,7 +20,7 @@ export class CheckPriceComponent implements OnInit{
   doID: any;
 
   product: any = "";
-  price: any = 0;
+  price: any = "";
 
   constructor(public readonly dialogService: DialogService,
     private readonly route: ActivatedRoute,
@@ -33,7 +34,7 @@ export class CheckPriceComponent implements OnInit{
 
   onOpenReadCodeBar(){
     this.ref = this.dialogService.open(
-      ReadBarcodeComponent, 
+      QuaggaComponent, 
       { 
         width: '80vw',
         modal:true,
@@ -56,9 +57,12 @@ export class CheckPriceComponent implements OnInit{
           this.product = response.obj.Descricao;
           this.price = "R$ " + parseFloat(response.obj.ValorVendaVista).toFixed(2);
         }
+        else{
+          this.product = "Produto não encontrado";
+        }
       },
       error: (error) => {
-        console.log(error)
+        this.product = "Produto não encontrado";
       }
     })
   }

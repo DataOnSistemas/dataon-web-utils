@@ -1,12 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BarcodeScannerLivestreamComponent, BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
-import { LoadProductService } from '../../services/loader-product/load-product.service';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-read-barcode',
   standalone: true,
-  providers: [LoadProductService],
   imports: [
     BarcodeScannerLivestreamModule
   ],
@@ -22,7 +20,6 @@ export class ReadBarcodeComponent implements AfterViewInit, OnInit {
   doID: any;
 
   constructor(
-    private readonly loadProduct: LoadProductService,
     public readonly ref: DynamicDialogRef,
     public readonly config: DynamicDialogConfig
   ){}
