@@ -33,6 +33,7 @@ export class DatatableComponent {
 
   @Input() config: DataTable = new DataTable();
   @Input() showPagination: boolean = true;
+  @Input() dataKey: string = "";
   @Output() onPageChange: EventEmitter<any> = new EventEmitter();
   @Output() onSelectedRegister: EventEmitter<any> = new EventEmitter();
 
@@ -41,6 +42,9 @@ export class DatatableComponent {
   ){
   }
 
+  onRefreshData(){
+    this.onPageChange.emit(new RequestData());
+  }
 
   pageChange($event: PaginatorState) {
     var data = new RequestData();
@@ -72,7 +76,7 @@ export class DatatableComponent {
   }
 
   onSelection(item: any){
-    console.log(item);
+    this.onSelectedRegister.emit(item.data);
   }
 
 }

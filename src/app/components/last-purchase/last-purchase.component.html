@@ -1,6 +1,7 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <app-datatable
   [config]="datatable"
-  (onPageChange)="onLoadLastPurchase($event)"
->
+  dataKey="IDPessoa"
+  (onSelectedRegister)="onSelectedData($event)"
+  (onPageChange)="onLoadLastPurchase($event)">
 </app-datatable>

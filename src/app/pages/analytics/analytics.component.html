@@ -4,11 +4,12 @@
     <p-tabView>
       <p-tabPanel header="Padrões de consumo">
         <div class="formgrid grid">
-          <div class="col-12 md:col-8">
-            <app-last-purchase>
+          <div class="col-12 md:col-4">
+            <app-last-purchase
+            (selectedPurchase)="onSelectedPurchase($event)">
             </app-last-purchase>
           </div>
-          <div class="col-12 md:col-4">
+          <div class="col-12 md:col-8">
             <app-last-purchase-products>
             </app-last-purchase-products>
           </div>

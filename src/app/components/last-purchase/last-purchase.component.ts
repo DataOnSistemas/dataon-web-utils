@@ -1,4 +1,4 @@
-import {Component, input, OnInit} from '@angular/core';
+import {Component, EventEmitter, input, OnInit, Output} from '@angular/core';
 import {DatatableComponent} from "../../shared/components/datatable/datatable/datatable.component";
 import {LastPurchaseConfig} from "./last-purchase.config";
 import {DataTable} from "../../shared/components/datatable/datatable/datatable";
@@ -21,6 +21,8 @@ import {BaseComponent} from "../../shared/components/inputs/base-component";
   styleUrl: './last-purchase.component.scss'
 })
 export class LastPurchaseComponent extends BaseComponent implements OnInit {
+
+  @Output() selectedPurchase: EventEmitter<any> = new EventEmitter<void>();
 
   configuration: LastPurchaseConfig = new LastPurchaseConfig();
   datatable: DataTable = new DataTable();
@@ -47,6 +49,10 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.onLoadLastPurchase(new RequestData());
+  }
+
+  onSelectedData(item: any){
+    this.selectedPurchase.emit(item);
   }
 
 }

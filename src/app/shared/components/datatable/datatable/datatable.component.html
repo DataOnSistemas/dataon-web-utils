@@ -6,9 +6,9 @@
   [(selection)]="selectedItem"
   [metaKeySelection]="false"
   [autoLayout]="true"
-  dataKey="IDPessoa"
+  [dataKey]="dataKey"
   (onRowSelect)="onSelection($event)"
-  [tableStyle]="{ 'min-width': '50rem'}">
+  >
   <ng-template pTemplate="caption">
     <div class="flex">
       <p-iconField iconPosition="left" class="ml-auto">
@@ -38,7 +38,7 @@
   </ng-template>
   <ng-template *ngIf="showPagination" pTemplate="summary">
     <div class="summary">
-      <p-button type="button"  icon="pi pi-refresh" styleClass="p-button-text" />
+      <p-button type="button" (onClick)="onRefreshData()" icon="pi pi-refresh" styleClass="p-button-text" />
       <p-paginator
         (onPageChange)="pageChange($event)"
         [rows]="config.size"

@@ -48,4 +48,8 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
       this.cookiesService.set(EnumCookie.DOID, this.doID);
     });
   }
+
+  onSelectedPurchase(item:any){
+    this.analyticsService.consumptionPatterns.next(item);
+  }
 }
