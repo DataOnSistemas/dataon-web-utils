@@ -1,6 +1,7 @@
-<div class="modal" [formGroup]="formGroup">
+<div [formGroup]="formGroup">
   <div class="formgrid grid">
     <app-auto-complete
+      (onSelectChange)="onSelectMessage($event)"
       formControlName="messageModel"
       name="messageModel"
       [field]="formGroup"
@@ -19,13 +20,18 @@
       type="text">
     </app-input-text>
     <app-input-text
-      formControlName="numer"
-      name="numer"
+      formControlName="number"
+      name="number"
       [field]="formGroup"
       class="field col-12 md:col-5 c-margin"
       label="Numero Celular"
       type="text">
     </app-input-text>
+    <p-editor
+      class="field col-12 md:col-12 c-margin"
+      formControlName="message"
+      [style]="{ height: '320px' }"
+    />
   </div>
 </div>
 <div class="buttons">

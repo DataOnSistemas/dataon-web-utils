@@ -45,7 +45,7 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
 
   @Input() defaultFilter: string = "";
 
-  @Output() onSelectChange: EventEmitter<void> = new EventEmitter();
+  @Output() onSelectChange: EventEmitter<any> = new EventEmitter();
 
   public itens: any[] = [];
 
@@ -80,6 +80,6 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
   }
 
   onSelected(){
-    this.onSelectChange.emit();
+    this.onSelectChange.emit(this.value);
   }
 }

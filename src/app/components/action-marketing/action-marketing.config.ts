@@ -1,3 +1,5 @@
+import {FormGroup} from "@angular/forms";
+
 export class ActionMarketingConfig{
 
   fields: any[] = [
@@ -26,4 +28,14 @@ export class ActionMarketingConfig{
       type: 'string'
     },
   ]
+
+  convertToDTO(formGroup: FormGroup): any {
+    let dto = {
+      messageModel: formGroup.get('messageModel')?.value,
+      name: formGroup.get('name')?.value,
+      number: formGroup.get('number')?.value,
+      message: formGroup.get('message')?.value
+    };
+    return dto;
+  }
 }

@@ -1,6 +1,8 @@
 @import "primeng/resources/themes/aura-dark-amber/theme.css";
 @import "primeng/resources/themes/aura-light-amber/theme.css";
 @import "primeng/resources/primeng.css";
+@import "../node_modules/quill/dist/quill.core.css";
+@import "../node_modules/quill/dist/quill.snow.css";
 body{
     height: 100vh;
     width: 100vw;

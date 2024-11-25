@@ -34,6 +34,7 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
   doID: string = "";
   ref: DynamicDialogRef | undefined;
   originalClose: any;
+  _person: any;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -55,6 +56,7 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
   }
 
   onSelectedPurchase(item:any){
+    this._person = item;
     this.analyticsService.consumptionPatterns.next(item);
   }
 
@@ -66,8 +68,9 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
         modal:true,
         draggable: true,
         maximizable: false,
-        data: null,
+        data: this._person,
         baseZIndex: 999999,
+        appendTo: "body"
       });
 
 
