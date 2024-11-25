@@ -1,0 +1,21 @@
+import { Injectable } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {CookiesService} from "../../shared/services/cookies/cookies.service";
+import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
+import {RequestData} from "../../shared/components/inputs/request-data";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AnalyticsService {
+
+  constructor(
+    private readonly http: HttpClient,
+    private readonly coockieService: CookiesService
+  ){}
+
+  public lastSale(request: RequestData) : Observable<any> {
+    return this.http.post(`analytics/lastSale?doID=${this.coockieService.get(EnumCookie.DOID)}`, request);
+  }
+}

@@ -1,4 +1,11 @@
 .analytics{
   padding: 10px;
   height: 100%;
+  .analytics-panels{
+    overflow-y: hidden;
+    height: 100%;
+    .default-consumer{
+
+    }
+  }
 }
