@@ -10,6 +10,8 @@ import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 import {LoadingComponent} from "../components/loading/loading.component";
+import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-complete.component";
+import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
 
 
 
@@ -17,7 +19,9 @@ import {LoadingComponent} from "../components/loading/loading.component";
   declarations: [],
   imports: [
     CommonModule,
-    LoadingComponent
+    LoadingComponent,
+    AutoCompleteComponent,
+    InputTextComponent
   ],
   exports: [
     NgIf,
@@ -32,7 +36,9 @@ import {LoadingComponent} from "../components/loading/loading.component";
     HttpModule,
     TimelineModule,
     BarcodeScannerLivestreamModule,
-    LoadingComponent
+    LoadingComponent,
+    AutoCompleteComponent,
+    InputTextComponent
   ]
 })
 export class SharedCommonModule { }

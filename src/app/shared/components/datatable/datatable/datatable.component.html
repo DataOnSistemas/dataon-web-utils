@@ -16,6 +16,8 @@
           <i class="pi pi-search"></i>
         </p-inputIcon>
         <input
+          (change)="onChangeInputFilter()"
+          [(ngModel)]="_filter"
           pInputText
           type="text"
           placeholder="Buscar" />

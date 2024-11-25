@@ -30,6 +30,7 @@ import {RequestData} from "../../inputs/request-data";
 export class DatatableComponent {
 
   selectedItem: any;
+  _filter: string = "";
 
   @Input() config: DataTable = new DataTable();
   @Input() showPagination: boolean = true;
@@ -77,6 +78,12 @@ export class DatatableComponent {
 
   onSelection(item: any){
     this.onSelectedRegister.emit(item.data);
+  }
+
+  onChangeInputFilter(){
+    var data = new RequestData();
+    data.filter = `nome like '%${this._filter}%' `;
+    this.onPageChange.emit(data);
   }
 
 }

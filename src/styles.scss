@@ -6,6 +6,21 @@ body{
     width: 100vw;
     margin: 0;
 }
+
+.modal{
+  margin-top: 20px;
+}
+
+.c-margin{
+  margin-top: 30px;
+}
+
+.buttons{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;

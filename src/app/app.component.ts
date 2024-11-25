@@ -1,8 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HttpModule } from './config/http/http.module';
 
@@ -22,6 +22,14 @@ import { HttpModule } from './config/http/http.module';
     MessageService
   ],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'dataon-web-utils';
+
+  constructor(
+    private config: PrimeNGConfig,
+  ) {}
+
+  ngOnInit(): void {
+    this.config.ripple = true;
+  }
 }

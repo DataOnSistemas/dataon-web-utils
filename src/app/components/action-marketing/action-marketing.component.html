@@ -1,0 +1,38 @@
+<div class="modal" [formGroup]="formGroup">
+  <div class="formgrid grid">
+    <app-auto-complete
+      formControlName="messageModel"
+      name="messageModel"
+      [field]="formGroup"
+      class="field col-12 md:col-12 c-margin"
+      label="Modelo de mensagem"
+      route="w82f8"
+      optionLabel="NOME"
+      type="text">
+    </app-auto-complete>
+    <app-input-text
+      formControlName="name"
+      name="name"
+      [field]="formGroup"
+      class="field col-12 md:col-7 c-margin"
+      label="Nome"
+      type="text">
+    </app-input-text>
+    <app-input-text
+      formControlName="numer"
+      name="numer"
+      [field]="formGroup"
+      class="field col-12 md:col-5 c-margin"
+      label="Numero Celular"
+      type="text">
+    </app-input-text>
+  </div>
+</div>
+<div class="buttons">
+  <div style="margin-right: 10px">
+    <p-button  label="Cancelar" (onClick)="onCancel()"/>
+  </div>
+  <div>
+    <p-button  label="Enviar" (onClick)="onSave()"/>
+  </div>
+</div>

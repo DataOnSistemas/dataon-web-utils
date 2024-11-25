@@ -10,6 +10,10 @@ import {AutoCompleteModule} from "primeng/autocomplete";
 
 import {AutoFocusModule} from "primeng/autofocus";
 import {AppControlValueAccessor} from "../app-control-value";
+import {DynamicQueryService} from "../../../../services/dynamic-query/dynamic-query.service";
+import {DynamicQuery} from "../../../../services/dynamic-query/dynamic-query";
+import {CookieService} from "ngx-cookie-service";
+import {EnumCookie} from "../../../services/cookies/cookie.enum";
 
 @Component({
   selector: 'app-auto-complete',
@@ -24,7 +28,7 @@ import {AppControlValueAccessor} from "../app-control-value";
     AutoFocusModule
   ],
   providers: [
-    //CrudService,
+    DynamicQueryService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: AutoCompleteComponent,
@@ -38,6 +42,7 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
 
   @Input() optionLabel: string = "";
   @Input() route: string = "";
+
   @Input() defaultFilter: string = "";
 
   @Output() onSelectChange: EventEmitter<void> = new EventEmitter();
@@ -46,30 +51,33 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
 
   constructor(
     private readonly fieldServiceInputText: FieldsService,
-    //private readonly crudService: CrudService
+    private readonly dynamicService: DynamicQueryService,
+    private readonly coockieService: CookieService
   ){
     super(fieldServiceInputText)
   }
 
   onFilter(value: any): void{
-    //var req = this.onRequestData(value);
-    // this.crudService.onGetAll(this.route, req).subscribe({
-    //   next: (res) => {
-    //     this.itens = res.contents;
-    //   },
-    //   error: (err) => {
-    //
-    //   }
-    // })
+    var req = this.onRequestData(value);
+    this.dynamicService.onDynamicQueryByContext(req).subscribe({
+      next: (res) => {
+        this.itens = res.paging.data;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
   //
-  // onRequestData(value: any): RequestData{
-  //   let req = new RequestData();
-  //   req.size = 5;
-  //   req.offset = 0;
-  //   req.filter = (this.defaultFilter !== "" ? this.defaultFilter + " and " : "") + ` ${this.optionLabel} eq ${value.query}`;
-  //   return req;
-  // }
+  onRequestData(value: any): DynamicQuery{
+    let req = new DynamicQuery();
+    req.limit = 5;
+    req.page = 1;
+    req.route = this.route;
+    req.doID = parseInt(this.coockieService.get(EnumCookie.DOID));
+    req.filter = ` 1 = 1  and (NOME like '%${value.query}%' or ID like '%${value.query}%' ) `
+    return req;
+  }
 
   onSelected(){
     this.onSelectChange.emit();
