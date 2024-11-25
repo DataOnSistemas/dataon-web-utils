@@ -9,13 +9,15 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HttpModule } from '../../config/http/http.module';
 import { TimelineModule } from 'primeng/timeline';
 import { BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
+import {LoadingComponent} from "../components/loading/loading.component";
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
+    CommonModule,
+    LoadingComponent
   ],
   exports: [
     NgIf,
@@ -29,7 +31,8 @@ import { BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
     FormsModule,
     HttpModule,
     TimelineModule,
-    BarcodeScannerLivestreamModule
+    BarcodeScannerLivestreamModule,
+    LoadingComponent
   ]
 })
 export class SharedCommonModule { }

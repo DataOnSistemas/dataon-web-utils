@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpHeaders, HttpRequest } from "@angular/common/http";
 import { catchError, Observable, tap, throwError } from "rxjs";
-import { CookiesService } from "../../services/cookies/cookies.service";
+import { CookiesService } from "../../shared/services/cookies/cookies.service";
 import { Router } from "@angular/router";
 import { inject } from "@angular/core";
-import { EnumCookie } from "../../services/cookies/cookie.enum";
+import { EnumCookie } from "../../shared/services/cookies/cookie.enum";
 import { environment } from "../../../environments/environment";
 
 export function authInterceptor(originalRequest: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
@@ -15,7 +15,7 @@ export function authInterceptor(originalRequest: HttpRequest<unknown>, next: Htt
 
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', environment.basicAuth);
-    
+
 
     request = originalRequest.clone({
         headers: headers,
