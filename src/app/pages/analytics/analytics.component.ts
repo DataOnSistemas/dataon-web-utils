@@ -17,7 +17,6 @@ import {BatchShippingComponent} from "../../components/batch-shipping/batch-ship
   standalone: true,
   imports: [
     SharedCommonModule,
-    TabViewModule,
     LastPurchaseComponent,
     LastPurchaseProductsComponent
   ],
@@ -36,6 +35,7 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   originalClose: any;
   _person: any;
+  _showFilters: boolean = false
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -108,5 +108,9 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
         this.originalClose(null);
       }
     };
+  }
+
+  onShowFilter() {
+    this._showFilters = !this._showFilters;
   }
 }

@@ -14,6 +14,7 @@ import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-com
 import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
 import {PickListModule} from "primeng/picklist";
 import {DragDropModule} from "primeng/dragdrop";
+import {TabViewModule} from "primeng/tabview";
 
 
 
@@ -42,7 +43,8 @@ import {DragDropModule} from "primeng/dragdrop";
     AutoCompleteComponent,
     InputTextComponent,
     PickListModule,
-    DragDropModule
+    DragDropModule,
+    TabViewModule
   ]
 })
 export class SharedCommonModule { }

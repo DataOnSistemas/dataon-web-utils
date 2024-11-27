@@ -34,7 +34,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
   public formGroup: FormGroup;
   private configuration: ActionMarketingConfig = new ActionMarketingConfig();
 
-  @Output() loading: EventEmitter<void> = new EventEmitter();
+
 
 
   constructor(

@@ -10,5 +10,8 @@ export class DynamicQuery {
     page: number = 0;
     start: number = 0;
     limit: number = 20;
+    type: number = 1;
+    extraCritSQL: string = "";
+
 }
 
