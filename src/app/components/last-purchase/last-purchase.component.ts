@@ -6,6 +6,7 @@ import {AnalyticsService} from "../../services/analytics/analytics.service";
 import {RequestData} from "../../shared/components/inputs/request-data";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {BaseComponent} from "../../shared/components/inputs/base-component";
+import {LoadingService} from "../../shared/services/loading/loading.service";
 
 @Component({
   selector: 'app-last-purchase',
@@ -28,21 +29,22 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
   datatable: DataTable = new DataTable();
 
   constructor(
-    private readonly analyticsService: AnalyticsService
+    private readonly analyticsService: AnalyticsService,
+    private readonly loadingService: LoadingService,
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
   }
 
   onLoadLastPurchase(requestData: RequestData): void {
-    this.onShowLoading();
+    this.loadingService.showLoading.next(true);
     this.analyticsService.lastSale(requestData).subscribe({
       next: data => {
         this.datatable.values = data.contents;
         this.datatable.totalRecords = data.total;
         this.datatable.size = data.size;
         this.datatable.page = data.offset;
-        this.onShowLoading();
+        this.loadingService.showLoading.next(false);
       }
     })
   }

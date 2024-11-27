@@ -10,6 +10,7 @@ import {AnalyticsService} from "../../services/analytics/analytics.service";
 import {LastPurchaseComponent} from "../../components/last-purchase/last-purchase.component";
 import {LastPurchaseProductsComponent} from "../../components/last-purchase-products/last-purchase-products.component";
 import {ActionMarketingComponent} from "../../components/action-marketing/action-marketing.component";
+import {BatchShippingComponent} from "../../components/batch-shipping/batch-shipping.component";
 
 @Component({
   selector: 'app-analytics',
@@ -77,11 +78,32 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
     this.originalClose = this.ref.close.bind(this.ref);
     this.ref.close = (result: any) => {
       if (result) {
-        if(!result.id){
-          //this.onOpenCash(result);
-        } else {
-          //this.onCloseCash(result);
-        }
+        this.originalClose(null);
+      } else {
+        this.originalClose(null);
+      }
+    };
+  }
+
+
+  onBachShipping(){
+    this.ref = this.dialogService.open(BatchShippingComponent,
+      {
+        header: "Envio em lote",
+        width: '80vw',
+        modal:true,
+        draggable: true,
+        maximizable: false,
+        data: this._person,
+        baseZIndex: 999999,
+        appendTo: "body"
+      });
+
+
+    this.originalClose = this.ref.close.bind(this.ref);
+    this.ref.close = (result: any) => {
+      if (result) {
+        this.originalClose(null);
       } else {
         this.originalClose(null);
       }

@@ -4,15 +4,20 @@
     <p-tabView>
       <p-tabPanel header="Padrões de consumo">
         <div class="formgrid grid">
-          <div class="btns col-12 md:col-12">
+          <div class="col-12 md:col-12">
+            <h2>
+              Consumo de clientes
+            </h2>
+          </div>
+          <div class=" btns col-12 md:col-12">
             <div class="buttons">
               <p-button  label="Ações de marketing" (onClick)="onOpenActionMarketing()" />
             </div>
             <div>
-              <p-button  label="Em lote"/>
+              <p-button (onClick)="onBachShipping()"  label="Em lote"/>
             </div>
           </div>
-          <div class="col-12 md:col-5">
+          <div class="c-margin col-12 md:col-5">
             <app-last-purchase
             (selectedPurchase)="onSelectedPurchase($event)">
             </app-last-purchase>
@@ -22,6 +27,10 @@
             </app-last-purchase-products>
           </div>
         </div>
+      </p-tabPanel>
+      <p-tabPanel header="Produtos a vencer">
+      </p-tabPanel>
+      <p-tabPanel header="Agendamento de serviços">
       </p-tabPanel>
     </p-tabView>
   </div>

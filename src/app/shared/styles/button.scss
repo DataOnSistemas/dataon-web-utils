@@ -1,0 +1,46 @@
+:host::ng-deep {
+    .p-button{
+        background: var(--active-indicator-color);
+        color: black;
+        padding: 0.55rem 1rem;
+    }
+    .p-button.p-button-icon-only {
+        width: 2rem;
+        padding: 0.45rem;
+    }
+    .p-datatable .p-datatable-tbody > tr > td {
+        text-align: left;
+        border: none;
+        border-width: 0 0 1px 0;
+        font-size: 12px;
+        padding: 0.35rem 0.90rem;
+    }
+    .p-datatable .p-datatable-thead > tr > th {
+      font-size: 12px;
+    }
+    .p-treetable .p-treetable-tbody > tr > td {
+      text-align: left;
+      border: none;
+      border-width: 0 0 1px 0;
+      font-size: 12px;
+      padding: 0.35rem 0.90rem;
+    }
+
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    font-size: 12px;
+    min-width: 2.0rem;
+    height: 2.0rem;
+  }
+
+  .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last{
+    font-size: 12px;
+    min-width: 2.0rem;
+    height: 2.0rem;
+  }
+  .p-paginator .p-dropdown{
+    font-size: 12px;
+    min-width: 2.0rem;
+    height: 2.0rem;
+  }
+
+}

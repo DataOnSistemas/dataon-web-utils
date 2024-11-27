@@ -12,6 +12,8 @@ import { BarcodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 import {LoadingComponent} from "../components/loading/loading.component";
 import {AutoCompleteComponent} from "../components/inputs/auto-complete/auto-complete.component";
 import {InputTextComponent} from "../components/inputs/input-text/input-text.component";
+import {PickListModule} from "primeng/picklist";
+import {DragDropModule} from "primeng/dragdrop";
 
 
 
@@ -38,7 +40,9 @@ import {InputTextComponent} from "../components/inputs/input-text/input-text.com
     BarcodeScannerLivestreamModule,
     LoadingComponent,
     AutoCompleteComponent,
-    InputTextComponent
+    InputTextComponent,
+    PickListModule,
+    DragDropModule
   ]
 })
 export class SharedCommonModule { }

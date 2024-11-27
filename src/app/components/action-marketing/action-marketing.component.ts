@@ -10,6 +10,8 @@ import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
 import {EditorModule} from 'primeng/editor';
 import {WhatsappService} from "../../services/whatsapp.service";
+import {LoadingService} from "../../shared/services/loading/loading.service";
+import {ToastService} from "../../shared/services/toast/toast.service";
 
 @Component({
   selector: 'app-action-marketing',
@@ -20,7 +22,8 @@ import {WhatsappService} from "../../services/whatsapp.service";
   ],
   providers: [
     RequestService,
-    WhatsappService
+    WhatsappService,
+    ToastService
   ],
   templateUrl: './action-marketing.component.html',
   styleUrl: './action-marketing.component.scss'
@@ -41,6 +44,8 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
     private readonly requestService: RequestService,
     private readonly cookiesService: CookiesService,
     private readonly whatsappService: WhatsappService,
+    private readonly loadingService: LoadingService,
+    private readonly toastService: ToastService,
   ) {
     super();
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
@@ -54,22 +59,25 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
 
   onSave() {
     if(this.formGroup.valid) {
+      this.loadingService.showLoading.next(true);
       this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
         next: data => {
           var dto = this.configuration.convertToDTO(this.formGroup);
           dto.message = this.whatsappService.htmlToTextWhats(dto.message);
           this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
             next: data => {
-              console.log(data);
+              this.loadingService.showLoading.next(false);
+              this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
+              this.ref.close(null);
             },
             error: err => {
-              console.log(err);
+              this.toastService.error({summary: "Mensagem", detail: err.message});
+              this.loadingService.showLoading.next(false);
             }
           })
         }
       });
     }else {
-      //this.toastService.warn({summary: this.translateService.translate("common_message"), detail: this.translateService.translate("common_message_invalid_fields")});
       this.fieldsService.verifyIsValid();
     }
   }
