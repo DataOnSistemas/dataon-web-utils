@@ -11,6 +11,8 @@ import {LastPurchaseComponent} from "../../components/last-purchase/last-purchas
 import {LastPurchaseProductsComponent} from "../../components/last-purchase-products/last-purchase-products.component";
 import {ActionMarketingComponent} from "../../components/action-marketing/action-marketing.component";
 import {BatchShippingComponent} from "../../components/batch-shipping/batch-shipping.component";
+import {Ripple} from "primeng/ripple";
+import {ExpiringProductsComponent} from "../../components/expiring-products/expiring-products.component";
 
 @Component({
   selector: 'app-analytics',
@@ -18,7 +20,8 @@ import {BatchShippingComponent} from "../../components/batch-shipping/batch-ship
   imports: [
     SharedCommonModule,
     LastPurchaseComponent,
-    LastPurchaseProductsComponent
+    LastPurchaseProductsComponent,
+    ExpiringProductsComponent
   ],
   providers: [
     AnalyticsService,

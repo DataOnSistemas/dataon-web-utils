@@ -34,6 +34,7 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Produtos a vencer">
+        <app-expiring-products></app-expiring-products>
       </p-tabPanel>
       <p-tabPanel header="Agendamento de serviços">
       </p-tabPanel>
@@ -44,9 +45,11 @@
   <ng-template pTemplate="header">
     <span class="font-semibold text-xl">Filtros</span>
   </ng-template>
-  <div class="formgrid grid">
-    <div class="fields col-12 md:col-12">
-      <p-button label="Filtrar" class="w-full"/>
-    </div>
-  </div>
+  <ng-template pTemplate="content">
+    <p-button pRipple  [outlined]="false"  styleClass="p-button-rounded w-full">
+      <div class="btn-tx">
+        Filtrar
+      </div>
+    </p-button>
+  </ng-template>
 </p-sidebar>

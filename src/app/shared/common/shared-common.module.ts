@@ -15,6 +15,7 @@ import {InputTextComponent} from "../components/inputs/input-text/input-text.com
 import {PickListModule} from "primeng/picklist";
 import {DragDropModule} from "primeng/dragdrop";
 import {TabViewModule} from "primeng/tabview";
+import {Ripple} from "primeng/ripple";
 
 
 
@@ -24,7 +25,8 @@ import {TabViewModule} from "primeng/tabview";
     CommonModule,
     LoadingComponent,
     AutoCompleteComponent,
-    InputTextComponent
+    InputTextComponent,
+    Ripple
   ],
   exports: [
     NgIf,
@@ -44,7 +46,8 @@ import {TabViewModule} from "primeng/tabview";
     InputTextComponent,
     PickListModule,
     DragDropModule,
-    TabViewModule
+    TabViewModule,
+    Ripple
   ]
 })
 export class SharedCommonModule { }

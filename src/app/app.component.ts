@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.config.ripple = true;
     this.staterServiceLoading();
-
+    this.config.ripple = true;
   }
 
   private staterServiceLoading() {
