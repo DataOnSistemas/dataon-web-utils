@@ -99,9 +99,10 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
   }
 
   onGetPerson(idpessoa: any){
-
+    this.loadingService.showLoading.next(true);
     this.requestService.get(`cadastros/Pessoa/GetData?doID=${this.cookiesService.get(EnumCookie.DOID)}&ID=${idpessoa}`,null).subscribe({
       next: (data) => {
+        this.loadingService.showLoading.next(false);
         this.formGroup.patchValue(
           {
             name: data.obj.Nome,
@@ -110,6 +111,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
         );
       },
       error: error => {
+        this.loadingService.showLoading.next(false);
       }
     });
   }

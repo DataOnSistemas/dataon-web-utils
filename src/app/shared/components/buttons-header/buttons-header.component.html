@@ -1,0 +1,18 @@
+<div class="col-12 md:col-12">
+  <h2>
+    {{ context }}
+  </h2>
+</div>
+<div class="btns col-12 md:col-12 buttons-space">
+  <div class="buttons">
+    <div style="margin-right: 5px">
+      <p-button  label="Ações de marketing" (onClick)="onOpenActionMarketing()" />
+    </div>
+    <div>
+      <p-button (onClick)="onBachShipping()"  label="Em lote"/>
+    </div>
+  </div>
+  <div>
+    <p-button icon="pi pi-filter" (onClick)="onShowFilter()"/>
+  </div>
+</div>

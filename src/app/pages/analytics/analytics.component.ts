@@ -13,6 +13,7 @@ import {ActionMarketingComponent} from "../../components/action-marketing/action
 import {BatchShippingComponent} from "../../components/batch-shipping/batch-shipping.component";
 import {Ripple} from "primeng/ripple";
 import {ExpiringProductsComponent} from "../../components/expiring-products/expiring-products.component";
+import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 
 @Component({
   selector: 'app-analytics',
@@ -21,7 +22,8 @@ import {ExpiringProductsComponent} from "../../components/expiring-products/expi
     SharedCommonModule,
     LastPurchaseComponent,
     LastPurchaseProductsComponent,
-    ExpiringProductsComponent
+    ExpiringProductsComponent,
+    ButtonsHeaderComponent
   ],
   providers: [
     AnalyticsService,
