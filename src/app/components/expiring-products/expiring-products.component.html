@@ -1,1 +1,7 @@
-<p>expiring-products works!</p>
+<app-datatable
+  [config]="datatable"
+  dataKey="IDProduto"
+  [showPagination]="true"
+  (onSelectedRegister)="onSelectedData($event)"
+  (onPageChange)="onLoadLastPurchase($event)">
+</app-datatable>

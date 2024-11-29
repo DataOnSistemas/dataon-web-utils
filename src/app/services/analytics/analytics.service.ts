@@ -22,7 +22,13 @@ export class AnalyticsService {
     return this.http.post(`analytics/lastSale?doID=${this.coockieService.get(EnumCookie.DOID)}`, request);
   }
 
+  public getExpiringProducts(request: RequestData) : Observable<any> {
+    return this.http.post(`analytics/GetExpiringProducts?doID=${this.coockieService.get(EnumCookie.DOID)}`, request);
+  }
+
   public getLastProducts(idpessoa: any) : Observable<any> {
     return this.http.post(`analytics/getLastProducts?doID=${this.coockieService.get(EnumCookie.DOID)}&idpessoa=${idpessoa}`, null);
   }
+
+
 }

@@ -1,8 +1,7 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <div class="analytics">
   <div class="analytics-panels">
-
-    <p-tabView>
+    <p-tabView [scrollable]="true">
       <p-tabPanel header="Padrões de consumo">
         <div class="formgrid grid">
           <app-buttons-header
@@ -24,7 +23,7 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="Produtos a vencer">
-        <div class="formgrid grid">
+        <div class="expiring formgrid grid">
           <app-buttons-header
             class="col-12 md:col-12"
             (_onBachShipping)="onBachShipping()"
@@ -32,7 +31,7 @@
             (_onShowFilter)="onShowFilter()"
             context="Produtos a vencer"
           ></app-buttons-header>
-          <app-expiring-products class="col-12 md:col-12"></app-expiring-products>
+          <app-expiring-products class="expiring col-12 md:col-12"></app-expiring-products>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Agendamento de serviços">
