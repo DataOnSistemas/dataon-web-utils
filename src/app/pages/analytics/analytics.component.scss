@@ -1,13 +1,16 @@
+//@import "../../shared/styles/button";
 .analytics{
   padding: 10px;
   height: 100%;
   .analytics-panels{
-    overflow-y: hidden;
     height: 100%;
     .default-consumer{
 
     }
   }
+}
+.panel {
+  height: 100%;
 }
 .btns {
   display: flex;
@@ -20,7 +23,7 @@
   text-align: center;
   width: 100%;
 }
-.expiring{
+.expiring-old{
   max-height: 90vh;
   overflow-y: auto;
 }
