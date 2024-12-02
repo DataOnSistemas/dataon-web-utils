@@ -40,7 +40,7 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
     this.onLoadLastPurchase(this.onSetFilters());
   }
 
-  onSelectedData(item: any){
+  onSelectedData($event: any){
 
   }
 
@@ -64,5 +64,10 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
     var requestData = new RequestData();
     requestData.order = " order by Validade asc"
     return requestData;
+  }
+
+  onPage($event: any) {
+    $event.order = " order by Validade asc "
+    this.onLoadLastPurchase($event);
   }
 }

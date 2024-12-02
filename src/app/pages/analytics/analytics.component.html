@@ -45,6 +45,17 @@
           ></app-buttons-header>
         </div>
       </p-tabPanel>
+      <p-tabPanel header="Aniversariantes">
+        <div class="formgrid grid">
+          <app-buttons-header
+            class="col-12 md:col-12"
+            (_onBachShipping)="onBachShipping()"
+            (_onOpenActionMarketing)="onOpenActionMarketing()"
+            (_onShowFilter)="onShowFilter()"
+            context="Aniversariantes da semana"
+          ></app-buttons-header>
+        </div>
+      </p-tabPanel>
     </p-tabView>
   </div>
 </div>
