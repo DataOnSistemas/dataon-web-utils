@@ -34,15 +34,16 @@
           <app-expiring-products class="expiring col-12 md:col-12"></app-expiring-products>
         </div>
       </p-tabPanel>
-      <p-tabPanel header="Agendamento de serviços">
+      <p-tabPanel header="Serviços">
         <div class="formgrid grid">
           <app-buttons-header
             class="col-12 md:col-12"
             (_onBachShipping)="onBachShipping()"
             (_onOpenActionMarketing)="onOpenActionMarketing()"
             (_onShowFilter)="onShowFilter()"
-            context="Agendamentos"
+            context="Serviços"
           ></app-buttons-header>
+          <app-sale-services class="expiring col-12 md:col-12"></app-sale-services>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Aniversariantes">
@@ -54,6 +55,7 @@
             (_onShowFilter)="onShowFilter()"
             context="Aniversariantes da semana"
           ></app-buttons-header>
+          <app-birthdays class="expiring col-12 md:col-12"></app-birthdays>
         </div>
       </p-tabPanel>
     </p-tabView>
