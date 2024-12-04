@@ -1,4 +1,4 @@
-import {Column, DataTable} from "../../shared/components/datatable/datatable/datatable";
+import {Column} from "../../shared/components/datatable/datatable/datatable";
 
 export class ExpiringProductsConfig {
 

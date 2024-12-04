@@ -30,5 +30,9 @@ export class AnalyticsService {
     return this.http.post(`analytics/getLastProducts?doID=${this.coockieService.get(EnumCookie.DOID)}&idpessoa=${idpessoa}`, null);
   }
 
+  public getBirthdaysWeek() : Observable<any> {
+    return this.http.get(`analytics/getBirthdaysWeek?doID=${this.coockieService.get(EnumCookie.DOID)}`);
+  }
+
 
 }

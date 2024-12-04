@@ -1,1 +1,6 @@
-<p>birthdays works!</p>
+<app-datatable
+  [config]="datatable"
+  dataKey="ID"
+  [showPagination]="false"
+  (onSelectedRegister)="onSelectedData($event)">
+</app-datatable>
