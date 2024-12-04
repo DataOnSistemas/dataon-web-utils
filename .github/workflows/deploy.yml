@@ -14,10 +14,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Upload files via FTP
-        uses: sebastianpopp/ftp-action@v1.3.0
+        uses: bradley-codes/ftp-deploy@v1.0.0
         with:
-          server: ftp://dataon.com.br
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/dataon-web-utils/browser
-          server-dir: /
+          ftp-server: ftp://dataon.com.br
+          ftp-username: ${{ secrets.FTP_USERNAME }}
+          ftp-password: ${{ secrets.FTP_PASSWORD }}
+          local-directory: dist/dataon-web-utils/browser
+          server-directory: /
