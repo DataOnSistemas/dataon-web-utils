@@ -13,6 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Aplica uso do node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Instala dependencias
+        run: npm instal
+
+      - name: Build project
+        run: npm run build
+
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
