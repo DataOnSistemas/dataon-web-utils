@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
       - name: Upload files via FTP
         uses: sebastianpopp/ftp-action@v1.3.0
         with:
