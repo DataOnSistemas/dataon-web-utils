@@ -15,6 +15,7 @@ import {Ripple} from "primeng/ripple";
 import {ExpiringProductsComponent} from "../../components/expiring-products/expiring-products.component";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {BirthdaysComponent} from "../../components/birthdays/birthdays.component";
+import {SaleServicesComponent} from "../../components/sale-services/sale-services.component";
 
 @Component({
   selector: 'app-analytics',
@@ -25,7 +26,8 @@ import {BirthdaysComponent} from "../../components/birthdays/birthdays.component
     LastPurchaseProductsComponent,
     ExpiringProductsComponent,
     ButtonsHeaderComponent,
-    BirthdaysComponent
+    BirthdaysComponent,
+    SaleServicesComponent
   ],
   providers: [
     AnalyticsService,
