@@ -19,5 +19,5 @@ jobs:
           server: ftp://dataon.com.br
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/dataon-web-utils/browser
+          local-dir: /dist/dataon-web-utils/browser
           server-dir: ./
