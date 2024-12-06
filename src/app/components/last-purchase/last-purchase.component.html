@@ -1,7 +1,20 @@
+<app-buttons-header
+  (_onActionMarketing)="onActionMarketing()"
+  (_onSendMessage)="onSendMessage()"
+  context="Consumo de clientes"
+></app-buttons-header>
+<div  class="formgrid grid">
+  <div class="c-margin col-12 md:col-5">
+    <app-datatable
+      [config]="datatable"
+      dataKey="IDPessoa"
+      (onSelectedRegister)="onSelectedData($event)"
+      (onPageChange)="onLoadLastPurchase($event)">
+    </app-datatable>
+  </div>
+  <div class="c-margin col-12 md:col-7">
+    <app-last-purchase-products>
+    </app-last-purchase-products>
+  </div>
+</div>
 
-<app-datatable
-  [config]="datatable"
-  dataKey="IDPessoa"
-  (onSelectedRegister)="onSelectedData($event)"
-  (onPageChange)="onLoadLastPurchase($event)">
-</app-datatable>

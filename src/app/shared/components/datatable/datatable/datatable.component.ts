@@ -82,7 +82,8 @@ export class DatatableComponent {
 
   onChangeInputFilter(){
     var data = new RequestData();
-    data.filter = ` and nome like '%${this._filter}%' `;
+    data.inputFilter = this._filter;
+
     this.onPageChange.emit(data);
   }
 

@@ -23,7 +23,6 @@ import {SaleServicesComponent} from "../../components/sale-services/sale-service
   imports: [
     SharedCommonModule,
     LastPurchaseComponent,
-    LastPurchaseProductsComponent,
     ExpiringProductsComponent,
     ButtonsHeaderComponent,
     BirthdaysComponent,
@@ -44,7 +43,6 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   originalClose: any;
   _person: any;
-  _showFilters: boolean = false
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -70,7 +68,9 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
     this.analyticsService.consumptionPatterns.next(item);
   }
 
-  onOpenActionMarketing(){
+
+  // Envio de mensagens
+  onSendMessage(){
     this.ref = this.dialogService.open(ActionMarketingComponent,
       {
         header: "Efetuar ação de marketing",
@@ -94,8 +94,8 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
     };
   }
 
-
-  onBachShipping(){
+  // sairá fora
+  onActionMarketing(){
     this.ref = this.dialogService.open(BatchShippingComponent,
       {
         header: "Envio em lote",
@@ -117,9 +117,5 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
         this.originalClose(null);
       }
     };
-  }
-
-  onShowFilter() {
-    this._showFilters = !this._showFilters;
   }
 }

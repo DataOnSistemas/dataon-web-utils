@@ -1,18 +1,28 @@
-<div class="col-12 md:col-12">
-  <h2>
-    {{ context }}
-  </h2>
+<div class="header col-12 md:col-12">
+  {{ context }}
 </div>
 <div class="btns col-12 md:col-12 buttons-space">
   <div class="buttons">
     <div style="margin-right: 5px">
-      <p-button  label="Ações de marketing" (onClick)="onOpenActionMarketing()" />
+      <p-button  label="Enviar Mensagem" (onClick)="onSendMessage()" />
     </div>
     <div>
-      <p-button (onClick)="onBachShipping()"  label="Em lote"/>
+      <p-button (onClick)="onActionMarketing()" label="Ações de marketing"/>
     </div>
   </div>
   <div>
     <p-button icon="pi pi-filter" (onClick)="onShowFilter()"/>
   </div>
 </div>
+<p-sidebar position="right" [(visible)]="_showFilters">
+  <ng-template pTemplate="header">
+    <span class="font-semibold text-xl">Filtros</span>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <p-button pRipple  [outlined]="false"  styleClass="p-button-rounded w-full">
+      <div class="btn-tx">
+        Filtrar
+      </div>
+    </p-button>
+  </ng-template>
+</p-sidebar>
