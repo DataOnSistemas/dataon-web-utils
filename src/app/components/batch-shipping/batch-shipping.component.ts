@@ -50,7 +50,7 @@ export class BatchShippingComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.onGetAllPersons("", "mnuCadastros_mnuClientes_mnuCadastro", 10000);
+    this.onGetAllPersons("", "mnuCadastros_mnuClientes_mnuCadastro", 20);
     if(this.config.data){
 
     }
