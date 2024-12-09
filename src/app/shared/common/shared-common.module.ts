@@ -16,6 +16,7 @@ import {PickListModule} from "primeng/picklist";
 import {DragDropModule} from "primeng/dragdrop";
 import {Ripple} from "primeng/ripple";
 import { TabsModule } from 'primeng/tabs';
+import {DropdownComponent} from "../components/inputs/dropdown/dropdown.component";
 
 
 
@@ -26,6 +27,7 @@ import { TabsModule } from 'primeng/tabs';
     LoadingComponent,
     AutoCompleteComponent,
     InputTextComponent,
+    DropdownComponent,
     Ripple
   ],
   exports: [
@@ -47,7 +49,8 @@ import { TabsModule } from 'primeng/tabs';
     PickListModule,
     DragDropModule,
     Ripple,
-    TabsModule
+    TabsModule,
+    DropdownComponent
   ]
 })
 export class SharedCommonModule { }

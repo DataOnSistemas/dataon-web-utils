@@ -10,7 +10,7 @@ import {LoadingService} from "../../shared/services/loading/loading.service";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
 import {ActionsService} from "../../services/actions/actions.service";
-import {yesNo} from "../../shared/common/constants";
+import {clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
 
 @Component({
   selector: 'app-last-purchase',
@@ -30,7 +30,9 @@ import {yesNo} from "../../shared/common/constants";
 })
 export class LastPurchaseComponent extends BaseComponent implements OnInit {
 
-  private _uesNo: any = yesNo;
+  protected _uesNo: any = yesNo;
+  protected _clientsNotSale: any = clientsNotSale;
+  protected _clientsWhat: any = clientsWhat;
 
   @Output() selectedPurchase: EventEmitter<any> = new EventEmitter<void>();
 

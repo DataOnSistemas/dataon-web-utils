@@ -4,11 +4,78 @@
   (_onFilter)="onLoadFilter()"
   context="Consumo de clientes" >
   <div class="formgrid grid" fields>
-    <app-input-text
+    <app-dropdown
+      label="Ativo"
+      optionLabel="value"
       class="c-margin col-12 md:col-12"
-    >
-
-    </app-input-text>
+      [options]="_uesNo">
+    </app-dropdown>
+    <app-auto-complete
+      class="c-margin col-12 md:col-12"
+      label="Classificação"
+      type="text"
+      route="Pes_win_Pessoa_fieldClass"
+      optionLabel="DESCRICAO">
+    </app-auto-complete>
+    <app-dropdown
+      label="Mostrar clientes com anumais inativos"
+      optionLabel="value"
+      class="c-margin col-12 md:col-12"
+      [options]="_uesNo">
+    </app-dropdown>
+    <app-auto-complete
+      class="c-margin col-12 md:col-6"
+      label="Cidade"
+      type="text"
+      route="Pes_win_Pessoa_fieldCidadeResidencial"
+      optionLabel="NOME">
+    </app-auto-complete>
+    <app-auto-complete
+      class="c-margin col-12 md:col-6"
+      label="Estado"
+      type="text"
+      route="Pes_win_Filter_f34"
+      optionLabel="NOME">
+    </app-auto-complete>
+    <app-dropdown
+      label="Vendas"
+      optionLabel="value"
+      class="c-margin col-12 md:col-12"
+      [options]="_clientsNotSale">
+    </app-dropdown>
+    <app-auto-complete
+      class="c-margin col-12 md:col-12"
+      label="Produto/Serviço"
+      type="text"
+      route="NFeProd_win_fieldProduto"
+      optionLabel="DESCRIÇÃO">
+    </app-auto-complete>
+    <app-auto-complete
+      class="c-margin col-12 md:col-12"
+      label="Grupo/Sub-grupo"
+      type="text"
+      route="w24f3"
+      optionLabel="DESCRIÇÃO">
+    </app-auto-complete>
+    <app-auto-complete
+      class="c-margin col-12 md:col-12"
+      label="Marca"
+      type="text"
+      route="Prod_win_fieldIDMarca"
+      optionLabel="DESCRIÇÃO">
+    </app-auto-complete>
+    <app-dropdown
+      label="Clientes que:"
+      optionLabel="value"
+      class="c-margin col-12 md:col-12"
+      [options]="_clientsWhat">
+    </app-dropdown>
+    <app-dropdown
+      label="Clientes que:"
+      optionLabel="value"
+      class="c-margin col-12 md:col-12"
+      [options]="_clientsWhat">
+    </app-dropdown>
   </div>
 </app-buttons-header>
 <div  class="formgrid grid">
