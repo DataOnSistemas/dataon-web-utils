@@ -21,6 +21,7 @@ export class ButtonsHeaderComponent {
   @Output() public _onSendMessage: EventEmitter<void> = new EventEmitter();
   @Output() public _onActionMarketing: EventEmitter<void> = new EventEmitter();
   @Output() public _onShowFilter: EventEmitter<void> = new EventEmitter();
+  @Output() public _onFilter: EventEmitter<void> = new EventEmitter();
 
   _showFilters: boolean = false;
 
@@ -35,5 +36,9 @@ export class ButtonsHeaderComponent {
 
   onShowFilter() {
     this._showFilters = !this._showFilters;
+  }
+
+  onFilter() {
+    this._onFilter.emit();
   }
 }

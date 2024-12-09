@@ -79,4 +79,8 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
     this.actionsService.onSendMessage(this._onSelectedItem);
   }
 
+  onLoadFilter(){
+
+  }
+
 }

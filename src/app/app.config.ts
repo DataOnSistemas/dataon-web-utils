@@ -8,8 +8,7 @@ import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withHashLocation()), 
-    provideClientHydration(),
+    provideRouter(routes, withHashLocation()),
     provideAnimations(),
     provideHttpClient(),
   ]

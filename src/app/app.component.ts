@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
   constructor(
     private config: PrimeNGConfig,
     private readonly loadingService: LoadingService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
     this.loadingService.showLoading.subscribe({
       next: data => {
         this._showLoading = data;
+        this.cdr.detectChanges();
       },
       error: data => {
         console.log(data)

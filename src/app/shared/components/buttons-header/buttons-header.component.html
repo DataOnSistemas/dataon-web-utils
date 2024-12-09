@@ -19,7 +19,8 @@
     <span class="font-semibold text-xl">Filtros</span>
   </ng-template>
   <ng-template pTemplate="content">
-    <p-button pRipple  [outlined]="false"  styleClass="p-button-rounded w-full">
+    <ng-content class="w-full" select="[fields]"></ng-content>
+    <p-button pRipple (onClick)="onFilter()"  [outlined]="false"  styleClass="p-button-rounded w-full">
       <div class="btn-tx">
         Filtrar
       </div>
