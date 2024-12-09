@@ -7,7 +7,6 @@ import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {FormGroup} from "@angular/forms";
-import {ActionMarketingConfig} from "../action-marketing/action-marketing.config";
 import {BatchShippingConfig} from "./batch-shipping.config";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {RequestService} from "../../services/request/request.service";

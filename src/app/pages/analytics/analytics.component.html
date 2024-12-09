@@ -1,47 +1,55 @@
 <app-loading [showLoading]="showLoading"></app-loading>
 <div class="analytics">
   <div class="analytics-panels">
-    <p-tabView [scrollable]="true" class="panel">
-      <p-tabPanel header="Padrões de consumo">
-        <app-last-purchase
-          class="col-12 md:col-12"
-          (selectedPurchase)="onSelectedPurchase($event)">
-        </app-last-purchase>
-      </p-tabPanel>
-      <p-tabPanel *ngIf="false" header="Produtos a vencer">
-        <div class="expiring formgrid grid">
-          <app-buttons-header
+    <p-tabs value="0" [scrollable]="true" class="panel">
+      <p-tablist>
+        <p-tab value="0">Padrões de consumo</p-tab>
+        <p-tab value="1">Produtos a vencer</p-tab>
+        <p-tab value="2">Serviços</p-tab>
+        <p-tab value="3">Aniversariantes</p-tab>
+      </p-tablist>
+      <p-tabpanels>
+        <p-tabpanel value="0">
+          <app-last-purchase
             class="col-12 md:col-12"
-            (_onActionMarketing)="onActionMarketing()"
-            (_onSendMessage)="onSendMessage()"
-            context="Produtos a vencer"
-          ></app-buttons-header>
-          <app-expiring-products class="expiring col-12 md:col-12"></app-expiring-products>
-        </div>
-      </p-tabPanel>
-      <p-tabPanel *ngIf="false" header="Serviços">
-        <div class="formgrid grid">
-          <app-buttons-header
-            class="col-12 md:col-12"
-            (_onActionMarketing)="onActionMarketing()"
-            (_onSendMessage)="onSendMessage()"
-            context="Serviços"
-          ></app-buttons-header>
-          <app-sale-services class="expiring col-12 md:col-12"></app-sale-services>
-        </div>
-      </p-tabPanel>
-      <p-tabPanel *ngIf="false" header="Aniversariantes">
-        <div class="formgrid grid">
-          <app-buttons-header
-            class="col-12 md:col-12"
-            (_onActionMarketing)="onActionMarketing()"
-            (_onSendMessage)="onSendMessage()"
-            context="Aniversariantes da semana"
-          ></app-buttons-header>
-          <app-birthdays class="expiring col-12 md:col-12"></app-birthdays>
-        </div>
-      </p-tabPanel>
-    </p-tabView>
+            (selectedPurchase)="onSelectedPurchase($event)">
+          </app-last-purchase>
+        </p-tabpanel>
+        <p-tabpanel value="1"  *ngIf="true">
+          <div class="expiring formgrid grid">
+            <app-buttons-header
+              class="col-12 md:col-12"
+              (_onActionMarketing)="onActionMarketing()"
+              (_onSendMessage)="onSendMessage()"
+              context="Produtos a vencer"
+            ></app-buttons-header>
+            <app-expiring-products class="expiring col-12 md:col-12"></app-expiring-products>
+          </div>
+        </p-tabpanel >
+        <p-tabpanel value="2" *ngIf="true">
+          <div class="formgrid grid">
+            <app-buttons-header
+              class="col-12 md:col-12"
+              (_onActionMarketing)="onActionMarketing()"
+              (_onSendMessage)="onSendMessage()"
+              context="Serviços"
+            ></app-buttons-header>
+            <app-sale-services class="expiring col-12 md:col-12"></app-sale-services>
+          </div>
+        </p-tabpanel>
+        <p-tabpanel value="3" *ngIf="true">
+          <div class="formgrid grid">
+            <app-buttons-header
+              class="col-12 md:col-12"
+              (_onActionMarketing)="onActionMarketing()"
+              (_onSendMessage)="onSendMessage()"
+              context="Aniversariantes da semana"
+            ></app-buttons-header>
+            <app-birthdays class="expiring col-12 md:col-12"></app-birthdays>
+          </div>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
   </div>
 </div>
 

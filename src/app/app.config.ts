@@ -18,6 +18,12 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme: {
         preset: CustomTheme,
+        options: {
+          prefix: 'p',
+          darkModeSelector: false,
+          cssLayer: false,
+          ripple: true
+        }
       }
     })
   ]

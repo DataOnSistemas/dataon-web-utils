@@ -7,6 +7,7 @@ import { ToastModule } from 'primeng/toast';
 import { HttpModule } from './config/http/http.module';
 import {LoadingComponent} from "./shared/components/loading/loading.component";
 import {LoadingService} from "./shared/services/loading/loading.service";
+import {PrimeNG} from "primeng/config";
 
 @Component({
   selector: 'app-root',
@@ -31,10 +32,12 @@ export class AppComponent implements OnInit {
   constructor(
     private readonly loadingService: LoadingService,
     private cdr: ChangeDetectorRef,
+    private primeng: PrimeNG
   ) {}
 
   ngOnInit(): void {
     this.staterServiceLoading();
+    this.primeng.ripple.set(true);
   }
 
   private staterServiceLoading() {
