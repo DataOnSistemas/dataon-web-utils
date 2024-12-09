@@ -1,10 +1,10 @@
-<p-tabs>
+<p-tabs value="0">
   <p-tablist>
     <p-tab value="0">Selecione os clientes</p-tab>
     <p-tab value="1">Modelo de mensagem</p-tab>
   </p-tablist>
   <p-tabpanels>
-    <p-tabpanel >
+    <p-tabpanel value="0">
       <div class="card">
         <p-pickList
           [source]="_allPerson"
@@ -27,7 +27,7 @@
         </p-pickList>
       </div>
     </p-tabpanel >
-    <p-tabpanel >
+    <p-tabpanel value="1">
       <div [formGroup]="formGroup">
         <div class="formgrid grid">
           <app-auto-complete
