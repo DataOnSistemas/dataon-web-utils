@@ -80,7 +80,7 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
   }
 
   onLoadFilter(){
-
+    console.log('dsd');
   }
 
 }

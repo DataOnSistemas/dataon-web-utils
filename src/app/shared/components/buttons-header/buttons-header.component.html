@@ -14,16 +14,14 @@
     <p-button icon="pi pi-filter" (onClick)="onShowFilter()"/>
   </div>
 </div>
-<p-sidebar position="right" [(visible)]="_showFilters">
-  <ng-template pTemplate="header">
-    <span class="font-semibold text-xl">Filtros</span>
-  </ng-template>
+<p-drawer header="Filtros" position="right" [(visible)]="_showFilters">
+
   <ng-template pTemplate="content">
     <ng-content class="w-full" select="[fields]"></ng-content>
-    <p-button pRipple (onClick)="onFilter()"  [outlined]="false"  styleClass="p-button-rounded w-full">
+    <p-button pRipple (click)="onFilter()"  [outlined]="false"  styleClass="p-button-rounded w-full">
       <div class="btn-tx">
         Filtrar
       </div>
     </p-button>
   </ng-template>
-</p-sidebar>
+</p-drawer>
