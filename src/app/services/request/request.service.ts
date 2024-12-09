@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 
 import {Observable} from "rxjs";

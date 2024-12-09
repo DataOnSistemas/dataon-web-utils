@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
@@ -13,7 +13,6 @@ import {LoadingService} from "./shared/services/loading/loading.service";
   standalone: true,
   imports: [
     RouterOutlet,
-    HttpClientModule,
     ToastModule,
     ReactiveFormsModule,
     HttpModule,
