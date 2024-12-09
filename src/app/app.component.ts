@@ -2,7 +2,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {MessageService} from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { HttpModule } from './config/http/http.module';
 import {LoadingComponent} from "./shared/components/loading/loading.component";
@@ -29,15 +29,12 @@ export class AppComponent implements OnInit {
   _showLoading: boolean = false;
 
   constructor(
-    private config: PrimeNGConfig,
     private readonly loadingService: LoadingService,
     private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.config.ripple = true;
     this.staterServiceLoading();
-    this.config.ripple = true;
   }
 
   private staterServiceLoading() {

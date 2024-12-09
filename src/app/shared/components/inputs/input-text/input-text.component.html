@@ -2,7 +2,7 @@
 <p-floatLabel>
   <input *ngIf="fieldType === 'input-text'"  [type]="type"
          [pTooltip]="guidance"
-         pAutoFocus
+         [pAutoFocus]="true"
          [disabled]="disabled"
          [autofocus]="focus"
          pInputText
@@ -14,10 +14,10 @@
         [pTooltip]="guidance"
          rows="5"
          cols="30"
-         pAutoFocus
+         [pAutoFocus]="true"
          [autofocus]="focus"
          [autoResize]="true"
-         pInputTextarea
+         pTextarea
          (ngModelChange)="onChange($event)"
          [ngModel]="value"
          [ngClass]="{'ng-invalid ng-dirty': !isValid}"
