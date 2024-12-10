@@ -7,6 +7,7 @@
     <p-tabpanel value="0">
       <div class="card">
         <p-pickList
+          [showTargetFilter]="false"
           [source]="_allPerson"
           [target]="_selectedPerson"
           sourceHeader="Clientes"
@@ -18,13 +19,20 @@
           filterBy="NOME"
           sourceFilterPlaceholder="Busque por nome"
           targetFilterPlaceholder="Busque por nome"
-          breakpoint="700px">
+          breakpoint="500px">
           <ng-template let-person pTemplate="item">
             <div class="formgrid grid">
               <div class="field col-12 md:col-12">{{person.NOME}}</div>
             </div>
           </ng-template>
         </p-pickList>
+        <p-paginator
+          (onPageChange)="pageChange($event)"
+          [rows]="table.size"
+          appendTo="body"
+          dropdownAppendTo="body"
+          [totalRecords]="table.totalRecords"
+          [rowsPerPageOptions]="[5,10, 20, 30]" />
       </div>
     </p-tabpanel >
     <p-tabpanel value="1">
@@ -51,7 +59,11 @@
     </p-tabpanel >
   </p-tabpanels>
 </p-tabs>
+
 <div class="buttons">
+  <div style="margin-right: 10px">
+    <p-button  label="Filtros" (onClick)="onShowFIlters()"/>
+  </div>
   <div style="margin-right: 10px">
     <p-button  label="Cancelar" (onClick)="onCancel()"/>
   </div>
@@ -59,6 +71,127 @@
     <p-button  label="Enviar" (onClick)="onSave()"/>
   </div>
 </div>
+<p-drawer header="Filtros" position="left" [(visible)]="_showFilters">
+
+  <ng-template pTemplate="content" [formGroup]="filterFormGroup">
+    <div class="formgrid grid" fields>
+      <app-dropdown
+        formControlName="ativo"
+        [field]="filterFormGroup"
+        label="Ativo"
+        optionLabel="value"
+        class="c-margin col-12 md:col-12"
+        [options]="_uesNo">
+      </app-dropdown>
+      <app-auto-complete
+        formControlName="classificacao"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-12"
+        label="Classificação"
+        type="text"
+        route="Pes_win_Pessoa_fieldClass"
+        optionLabel="DESCRICAO">
+      </app-auto-complete>
+      <app-dropdown
+        formControlName="animaisinativos"
+        [field]="filterFormGroup"
+        label="Mostrar clientes com anumais inativos"
+        optionLabel="value"
+        class="c-margin col-12 md:col-12"
+        [options]="_uesNo">
+      </app-dropdown>
+      <app-auto-complete
+        formControlName="cidade"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-6"
+        label="Cidade"
+        type="text"
+        route="Pes_win_Pessoa_fieldCidadeResidencial"
+        optionLabel="NOME">
+      </app-auto-complete>
+      <app-auto-complete
+        formControlName="estado"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-6"
+        label="Estado"
+        type="text"
+        route="Pes_win_Filter_f34"
+        optionLabel="NOME">
+      </app-auto-complete>
+      <app-dropdown
+        formControlName="vendasperiodo"
+        [field]="filterFormGroup"
+        label="Vendas"
+        optionLabel="value"
+        class="c-margin col-12 md:col-12"
+        [options]="_clientsNotSale">
+      </app-dropdown>
+      <app-auto-complete
+        formControlName="produto"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-12"
+        label="Produto/Serviço"
+        type="text"
+        route="NFeProd_win_fieldProduto"
+        optionLabel="DESCRIÇÃO">
+      </app-auto-complete>
+      <app-auto-complete
+        formControlName="grupo"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-12"
+        label="Grupo/Sub-grupo"
+        type="text"
+        route="w24f3"
+        optionLabel="DESCRIÇÃO">
+      </app-auto-complete>
+      <app-auto-complete
+        formControlName="marca"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-12"
+        label="Marca"
+        type="text"
+        route="Prod_win_fieldIDMarca"
+        optionLabel="DESCRIÇÃO">
+      </app-auto-complete>
+      <app-dropdown
+        formControlName="clientesque"
+        [field]="filterFormGroup"
+        label="Clientes que:"
+        optionLabel="value"
+        class="c-margin col-12 md:col-12"
+        [options]="_clientsWhat">
+      </app-dropdown>
+      <app-dropdown
+        formControlName="comfaturamento"
+        [field]="filterFormGroup"
+        label="Com faturamento"
+        optionLabel="value"
+        class="c-margin col-12 md:col-12"
+        [options]="_clientsinvoicing">
+      </app-dropdown>
+      <app-input-date
+        formControlName="de"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-6"
+        label="De">
+      </app-input-date>
+      <app-input-date
+        formControlName="ate"
+        [field]="filterFormGroup"
+        class="c-margin col-12 md:col-6"
+        label="Até">
+      </app-input-date>
+    </div>
+
+    <p-button pRipple (click)="onFilter()"  [outlined]="false"  styleClass="p-button-rounded w-full  c-margin">
+      <div class="btn-tx">
+        Filtrar
+      </div>
+    </p-button>
+  </ng-template>
+</p-drawer>
+
+
 
 
 

@@ -17,6 +17,7 @@ import {DragDropModule} from "primeng/dragdrop";
 import {Ripple} from "primeng/ripple";
 import { TabsModule } from 'primeng/tabs';
 import {DropdownComponent} from "../components/inputs/dropdown/dropdown.component";
+import {InputDateComponent} from "../components/inputs/input-date/input-date.component";
 
 
 
@@ -28,7 +29,8 @@ import {DropdownComponent} from "../components/inputs/dropdown/dropdown.componen
     AutoCompleteComponent,
     InputTextComponent,
     DropdownComponent,
-    Ripple
+    Ripple,
+    InputDateComponent
   ],
   exports: [
     NgIf,
@@ -50,7 +52,8 @@ import {DropdownComponent} from "../components/inputs/dropdown/dropdown.componen
     DragDropModule,
     Ripple,
     TabsModule,
-    DropdownComponent
+    DropdownComponent,
+    InputDateComponent
   ]
 })
 export class SharedCommonModule { }

@@ -11,6 +11,11 @@ import {BatchShippingConfig} from "./batch-shipping.config";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {RequestService} from "../../services/request/request.service";
 import {EditorModule} from "primeng/editor";
+import {Paginator, PaginatorState} from "primeng/paginator";
+import {DataTable} from "../../shared/components/datatable/datatable/datatable";
+import {Drawer} from "primeng/drawer";
+import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
+import {PickListSourceFilterEvent} from "primeng/picklist";
 
 
 @Component({
@@ -19,6 +24,8 @@ import {EditorModule} from "primeng/editor";
   imports: [
     SharedCommonModule,
     EditorModule,
+    Paginator,
+    Drawer,
   ],
   providers: [
     DynamicQueryService,
@@ -29,11 +36,20 @@ import {EditorModule} from "primeng/editor";
 })
 export class BatchShippingComponent implements OnInit {
 
-  _allPerson: any[] = [];
-  _selectedPerson: any[] = [];
+  protected readonly _uesNo = yesNo;
+  protected readonly _clientsNotSale = clientsNotSale;
+  protected readonly _clientsWhat = clientsWhat;
+  protected readonly _clientsinvoicing = clientsinvoicing;
 
-  public formGroup: FormGroup;
-  private configuration: BatchShippingConfig = new BatchShippingConfig();
+  public _allPerson: any[] = [];
+  public _selectedPerson: any[] = [];
+  public table: DataTable = new DataTable();
+  public readonly formGroup: FormGroup;
+  public readonly filterFormGroup: FormGroup;
+  public _showFilters: boolean = false;
+
+  private readonly configuration: BatchShippingConfig = new BatchShippingConfig(this.cookiesService);
+
 
   constructor(
     private readonly fieldsService: FieldsService,
@@ -45,24 +61,24 @@ export class BatchShippingComponent implements OnInit {
     private readonly requestService: RequestService,
   ) {
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
+    this.filterFormGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.filterFields);
   }
 
 
   ngOnInit(): void {
-    this.onGetAllPersons("", "mnuCadastros_mnuClientes_mnuCadastro", 20);
-    if(this.config.data){
-
-    }
+    this.onGetAllPersons(this.configuration.dynamicQuery);
   }
 
 
-  private onGetAllPersons(value: any, route: string, limit: number) {
+  private onGetAllPersons(requestData: DynamicQuery) {
     this.loadingService.showLoading.next(true);
-    var requestData = this.onRequestData(value, route, limit);
     this.ddynamicService.onDynamicQueryByContext(requestData).subscribe({
       next: (res) => {
         if(res.RetWm === "success"){
           this._allPerson = res.paging.data;
+          this.table.totalRecords = res.paging.totalRecords;
+          this.table.size = this.configuration.dynamicQuery.limit;
+          this.table.page = this.configuration.dynamicQuery.page;
         }
         this.loadingService.showLoading.next(false);
       },
@@ -70,18 +86,6 @@ export class BatchShippingComponent implements OnInit {
         this.loadingService.showLoading.next(false);
       }
     })
-  }
-
-  onRequestData(value: any, route: string, limit: number): DynamicQuery{
-    let req = new DynamicQuery();
-    req.limit = limit;
-    req.page = 1;
-    req.type = 0;
-    req.route = route;
-    req.doID = parseInt(this.cookiesService.get(EnumCookie.DOID));
-    req.filter = ` `
-    req.extraCritSQL = " AND (Pessoas_clientes.Inativo = 0) "
-    return req;
   }
 
   onSelectMessage(item: any){
@@ -100,27 +104,26 @@ export class BatchShippingComponent implements OnInit {
   }
 
   onSave() {
-    if(this.formGroup.valid) {
-      // this.loadingService.showLoading.next(true);
-      // this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
-      //   next: data => {
-      //     var dto = this.configuration.convertToDTO(this.formGroup);
-      //     dto.message = this.whatsappService.htmlToTextWhats(dto.message);
-      //     this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
-      //       next: data => {
-      //         this.loadingService.showLoading.next(false);
-      //         this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
-      //         this.ref.close(null);
-      //       },
-      //       error: err => {
-      //         this.toastService.error({summary: "Mensagem", detail: err.message});
-      //         this.loadingService.showLoading.next(false);
-      //       }
-      //     })
-      //   }
-      // });
-    }else {
-      this.fieldsService.verifyIsValid();
-    }
+  }
+
+  pageChange($event: PaginatorState) {
+    this.configuration.dynamicQuery.page = $event.page ? $event.page + 1 : 1;
+    this.configuration.dynamicQuery.start = this.configuration.dynamicQuery.page > 1 ? this.configuration.dynamicQuery.page * 20 : 0;
+    this.onGetAllPersons(this.configuration.dynamicQuery);
+  }
+
+  onShowFIlters(){
+    this._showFilters = !this._showFilters;
+  }
+
+
+  onFilter() {
+    console.log(this.filterFormGroup.value)
+    var stringFilter = this.configuration.onLoadFilter(this.filterFormGroup);
+  }
+
+
+  onFilterSource($event: PickListSourceFilterEvent) {
+    console.log($event);
   }
 }

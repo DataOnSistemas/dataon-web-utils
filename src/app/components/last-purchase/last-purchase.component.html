@@ -71,11 +71,19 @@
       [options]="_clientsWhat">
     </app-dropdown>
     <app-dropdown
-      label="Clientes que:"
+      label="Com faturamento"
       optionLabel="value"
       class="c-margin col-12 md:col-12"
-      [options]="_clientsWhat">
+      [options]="_clientsinvoicing">
     </app-dropdown>
+    <app-input-date
+      class="c-margin col-12 md:col-6"
+      label="De">
+    </app-input-date>
+    <app-input-date
+      class="c-margin col-12 md:col-6"
+      label="Até">
+    </app-input-date>
   </div>
 </app-buttons-header>
 <div  class="formgrid grid">

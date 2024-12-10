@@ -15,3 +15,10 @@ export const clientsWhat: any = [
   { key: 1, value: "Nunca compraram" },
   { key: 2, value: "Já compraram" },
 ]
+
+export const clientsinvoicing: any = [
+  { key: 0, value: "(Todos)" },
+  { key: 1, value: "Em aberto" },
+  { key: 2, value: "Sem Faturamento em aberto" },
+]
+
