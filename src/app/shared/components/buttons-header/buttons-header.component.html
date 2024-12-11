@@ -4,9 +4,12 @@
 <div class="btns col-12 md:col-12 buttons-space">
   <div class="buttons">
     <div style="margin-right: 5px">
+      <ng-content class="w-full" select="[buttons]"></ng-content>
+    </div>
+    <div *ngIf="sendMessage" style="margin-right: 5px">
       <p-button  label="Enviar Mensagem" (onClick)="onSendMessage()" />
     </div>
-    <div>
+    <div *ngIf="actionMarketing">
       <p-button (onClick)="onActionMarketing()" label="Ações de marketing"/>
     </div>
   </div>

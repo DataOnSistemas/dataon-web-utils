@@ -1,6 +1,6 @@
-<p-tabs value="0">
+<p-tabs [value]="1">
   <p-tablist>
-    <p-tab value="0">Selecione os clientes</p-tab>
+    <p-tab *ngIf="_showTabClients" value="0">Selecione os clientes</p-tab>
     <p-tab value="1">Modelo de mensagem</p-tab>
   </p-tablist>
   <p-tabpanels>

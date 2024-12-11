@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoadingService} from "../../shared/services/loading/loading.service";
 import {DynamicQueryService} from "../../services/dynamic-query/dynamic-query.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
@@ -18,7 +18,7 @@ import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared
 import {PickListSourceFilterEvent} from "primeng/picklist";
 import {WhatsappService} from "../../services/whatsapp.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
-import {TimeInterval} from "rxjs/internal/operators/timeInterval";
+import e from "express";
 
 
 @Component({
@@ -39,21 +39,27 @@ import {TimeInterval} from "rxjs/internal/operators/timeInterval";
   templateUrl: './batch-shipping.component.html',
   styleUrl: './batch-shipping.component.scss'
 })
-export class BatchShippingComponent implements OnInit {
+export class BatchShippingComponent implements OnInit, AfterViewInit {
 
   protected readonly _uesNo = yesNo;
   protected readonly _clientsNotSale = clientsNotSale;
   protected readonly _clientsWhat = clientsWhat;
   protected readonly _clientsinvoicing = clientsinvoicing;
 
-  public _allPerson: any[] = [];
-  public _selectedPerson: any[] = [];
-  public table: DataTable = new DataTable();
+  private readonly configuration: BatchShippingConfig = new BatchShippingConfig(this.cookiesService);
+
   public readonly formGroup: FormGroup;
   public readonly filterFormGroup: FormGroup;
-  public _showFilters: boolean = false;
 
-  private readonly configuration: BatchShippingConfig = new BatchShippingConfig(this.cookiesService);
+
+
+  public _allPerson: any[] = [];
+  public _selectedPerson: any[] = [];
+  public _showFilters: boolean = false;
+  public _activeTab: number = 0;
+  public _showTabClients: boolean = true;
+  public table: DataTable = new DataTable();
+
 
 
   constructor(
@@ -66,6 +72,7 @@ export class BatchShippingComponent implements OnInit {
     private readonly requestService: RequestService,
     private readonly whatsappService: WhatsappService,
     private readonly toastService: ToastService,
+    private readonly changeDetector: ChangeDetectorRef,
   ) {
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
     this.filterFormGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.filterFields);
@@ -179,5 +186,17 @@ export class BatchShippingComponent implements OnInit {
       clientesque: this._clientsWhat.find(e => e.key === 0),
       comfaturamento: this._clientsinvoicing.find(e => e.key === 0),
     })
+  }
+
+  ngAfterViewInit(): void {
+
+    let bathConfig = this.config.data;
+    if(bathConfig){
+      if(!bathConfig.enableSearClients){
+        this._activeTab = 1;
+        this._showTabClients = false;
+      }
+      this.changeDetector.detectChanges();
+    }
   }
 }
