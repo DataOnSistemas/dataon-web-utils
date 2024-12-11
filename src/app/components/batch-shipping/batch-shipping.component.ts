@@ -16,6 +16,8 @@ import {DataTable} from "../../shared/components/datatable/datatable/datatable";
 import {Drawer} from "primeng/drawer";
 import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
 import {PickListSourceFilterEvent} from "primeng/picklist";
+import {WhatsappService} from "../../services/whatsapp.service";
+import {ToastService} from "../../shared/services/toast/toast.service";
 
 
 @Component({
@@ -29,7 +31,9 @@ import {PickListSourceFilterEvent} from "primeng/picklist";
   ],
   providers: [
     DynamicQueryService,
-    RequestService
+    RequestService,
+    WhatsappService,
+    ToastService
   ],
   templateUrl: './batch-shipping.component.html',
   styleUrl: './batch-shipping.component.scss'
@@ -59,6 +63,8 @@ export class BatchShippingComponent implements OnInit {
     public readonly config: DynamicDialogConfig,
     private readonly cookiesService: CookiesService,
     private readonly requestService: RequestService,
+    private readonly whatsappService: WhatsappService,
+    private readonly toastService: ToastService,
   ) {
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
     this.filterFormGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.filterFields);
@@ -67,6 +73,7 @@ export class BatchShippingComponent implements OnInit {
 
   ngOnInit(): void {
     this.onGetAllPersons(this.configuration.dynamicQuery);
+    this.setDefaultFilters();
   }
 
 
@@ -88,6 +95,49 @@ export class BatchShippingComponent implements OnInit {
     })
   }
 
+  async onValidAndSend() {
+    this.loadingService.showLoading.next(true);
+
+    if(this.formGroup.valid) {
+      for (const item of this._selectedPerson) {
+        this.formGroup.patchValue({
+          name: item["NOME"],
+          number: item["FONE_CELULAR"],
+        });
+        await this.onSend();
+      }
+      this.loadingService.showLoading.next(false);
+    }else {
+      this.fieldsService.verifyIsValid();
+      this.loadingService.showLoading.next(false);
+    }
+
+  }
+
+  async onSend() {
+    this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
+      next: data => {
+        var dto = this.configuration.convertToDTO(this.formGroup);
+        dto.message = this.whatsappService.htmlToTextWhats(dto.message);
+        this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
+          next: data => {
+            if(data.RetWm === "success"){
+              this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
+              this.ref.close(null);
+            } else {
+              this.toastService.error({summary: "Mensagem", detail: data.info});
+            }
+
+          },
+          error: err => {
+            this.toastService.error({summary: "Mensagem", detail: err.message});
+            this.loadingService.showLoading.next(false);
+          }
+        })
+      }
+    });
+  }
+
   onSelectMessage(item: any){
     let value = this.formGroup.get("messageModel")?.value;
     this.requestService.get(`documentos/DocumentosModelos/GetData?doID=${this.cookiesService.get(EnumCookie.DOID)}&ID=${value.ID}`,null).subscribe({
@@ -99,11 +149,8 @@ export class BatchShippingComponent implements OnInit {
     });
   }
 
-  onCancel() {
+  async onCancel() {
     this.ref.close(null);
-  }
-
-  onSave() {
   }
 
   pageChange($event: PaginatorState) {
@@ -118,12 +165,22 @@ export class BatchShippingComponent implements OnInit {
 
 
   onFilter() {
-    console.log(this.filterFormGroup.value)
-    var stringFilter = this.configuration.onLoadFilter(this.filterFormGroup);
+    this.configuration.dynamicQuery.extraCritSQL = this.configuration.onLoadFilter(this.filterFormGroup);
+    this.onGetAllPersons(this.configuration.dynamicQuery);
+    this.onShowFIlters()
   }
 
 
   onFilterSource($event: PickListSourceFilterEvent) {
-    console.log($event);
+  }
+
+  private setDefaultFilters() {
+    this.filterFormGroup.patchValue({
+      ativo: this._uesNo.find(e => e.key === 0),
+      animaisinativos: this._uesNo.find(e => e.key === 1),
+      vendasperiodo: this._clientsNotSale.find(e => e.key === 0),
+      clientesque: this._clientsWhat.find(e => e.key === 0),
+      comfaturamento: this._clientsinvoicing.find(e => e.key === 0),
+    })
   }
 }

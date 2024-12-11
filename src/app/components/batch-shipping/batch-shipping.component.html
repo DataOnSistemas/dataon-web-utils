@@ -68,7 +68,7 @@
     <p-button  label="Cancelar" (onClick)="onCancel()"/>
   </div>
   <div>
-    <p-button  label="Enviar" (onClick)="onSave()"/>
+    <p-button  label="Enviar" (onClick)="onValidAndSend()"/>
   </div>
 </div>
 <p-drawer header="Filtros" position="left" [(visible)]="_showFilters">
@@ -183,7 +183,7 @@
       </app-input-date>
     </div>
 
-    <p-button pRipple (click)="onFilter()"  [outlined]="false"  styleClass="p-button-rounded w-full  c-margin">
+    <p-button (click)="onFilter()"  [outlined]="false"  styleClass="p-button-rounded w-full  c-margin">
       <div class="btn-tx">
         Filtrar
       </div>
