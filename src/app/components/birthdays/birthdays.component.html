@@ -1,6 +1,17 @@
-<app-datatable
-  [config]="datatable"
-  dataKey="ID"
-  [showPagination]="false"
-  (onSelectedRegister)="onSelectedData($event)">
-</app-datatable>
+
+<app-buttons-header
+  (_onActionMarketing)="onActionMarketing()"
+  (_onSendMessage)="onSendMessage()"
+  (_onFilter)="onLoadFilter()"
+  context="Aniversariantes da semana"
+></app-buttons-header>
+<div  class="formgrid grid">
+  <div class="c-margin col-12 md:col-12">
+    <app-datatable
+      [config]="datatable"
+      dataKey="ID"
+      [showPagination]="false"
+      (onSelectedRegister)="onSelectedData($event)">
+    </app-datatable>
+  </div>
+</div>

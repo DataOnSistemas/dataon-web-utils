@@ -75,7 +75,7 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
     req.page = 1;
     req.route = this.route;
     req.doID = parseInt(this.coockieService.get(EnumCookie.DOID));
-    req.filter = ` 1 = 1  and (NOME like '%${value.query}%' or ID like '%${value.query}%' ) `
+    req.filter = ` 1 = 1  and (${this.optionLabel} like '%${value.query}%' or ID like '%${value.query}%' ) `
     return req;
   }
 

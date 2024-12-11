@@ -1,4 +1,4 @@
-import {HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpHeaders, HttpRequest} from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpHeaders, HttpRequest } from "@angular/common/http";
 import {catchError, Observable, throwError} from "rxjs";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {Router} from "@angular/router";

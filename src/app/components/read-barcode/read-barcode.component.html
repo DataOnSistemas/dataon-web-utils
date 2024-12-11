@@ -3,7 +3,7 @@
     [errorFilter]="{ median: 0.08, threshold: 0.1 }"
     [torch]="false"
     (valueChanges)="onValueChanges($event)"
-    (started)="(onStarted)">
+    (started)="onStarted($event)">
 </barcode-scanner-livestream>
 <div [hidden]="!barcodeValue">
 {{ barcodeValue }}

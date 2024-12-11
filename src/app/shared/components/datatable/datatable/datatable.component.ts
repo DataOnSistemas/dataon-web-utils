@@ -8,6 +8,7 @@ import { ButtonModule} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {CommonModule, DatePipe} from "@angular/common";
 import {RequestData} from "../../inputs/request-data";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-datatable',
@@ -19,7 +20,8 @@ import {RequestData} from "../../inputs/request-data";
     IconFieldModule,
     InputIconModule,
     ButtonModule,
-    PaginatorModule
+    PaginatorModule,
+    FormsModule
   ],
   providers: [
     DatePipe
@@ -82,7 +84,8 @@ export class DatatableComponent {
 
   onChangeInputFilter(){
     var data = new RequestData();
-    data.filter = ` and nome like '%${this._filter}%' `;
+    data.inputFilter = this._filter;
+
     this.onPageChange.emit(data);
   }
 

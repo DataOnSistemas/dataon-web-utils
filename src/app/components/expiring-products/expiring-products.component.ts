@@ -8,16 +8,22 @@ import {LoadingService} from "../../shared/services/loading/loading.service";
 import {ExpiringProductsConfig} from "./expiring-products.config";
 import {BaseComponent} from "../../shared/components/inputs/base-component";
 import {RequestData} from "../../shared/components/inputs/request-data";
+import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
+import {ActionsService} from "../../services/actions/actions.service";
+import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
 
 @Component({
   selector: 'app-expiring-products',
   standalone: true,
   imports: [
     SharedCommonModule,
-    DatatableComponent
+    DatatableComponent,
+    ButtonsHeaderComponent,
+    LastPurchaseProductsComponent
   ],
   providers: [
-    AnalyticsService
+    AnalyticsService,
+    ActionsService,
   ],
   templateUrl: './expiring-products.component.html',
   styleUrl: './expiring-products.component.scss'
@@ -31,6 +37,7 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
+    private readonly actionsService: ActionsService
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
@@ -70,4 +77,17 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
     $event.order = " order by Validade asc "
     this.onLoadLastPurchase($event);
   }
+
+  onActionMarketing() {
+    this.actionsService.onActionMarketing(null);
+  }
+
+  onSendMessage() {
+    this.actionsService.onSendMessage(null);
+  }
+
+  onLoadFilter(){
+
+  }
+
 }

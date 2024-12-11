@@ -1,17 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BaseComponent} from "../../shared/components/inputs/base-component";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {ActivatedRoute} from "@angular/router";
-import {TabViewModule} from 'primeng/tabview';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
 import {AnalyticsService} from "../../services/analytics/analytics.service";
 import {LastPurchaseComponent} from "../../components/last-purchase/last-purchase.component";
-import {LastPurchaseProductsComponent} from "../../components/last-purchase-products/last-purchase-products.component";
 import {ActionMarketingComponent} from "../../components/action-marketing/action-marketing.component";
 import {BatchShippingComponent} from "../../components/batch-shipping/batch-shipping.component";
-import {Ripple} from "primeng/ripple";
 import {ExpiringProductsComponent} from "../../components/expiring-products/expiring-products.component";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {BirthdaysComponent} from "../../components/birthdays/birthdays.component";
@@ -23,7 +20,6 @@ import {SaleServicesComponent} from "../../components/sale-services/sale-service
   imports: [
     SharedCommonModule,
     LastPurchaseComponent,
-    LastPurchaseProductsComponent,
     ExpiringProductsComponent,
     ButtonsHeaderComponent,
     BirthdaysComponent,
@@ -37,14 +33,13 @@ import {SaleServicesComponent} from "../../components/sale-services/sale-service
   templateUrl: './analytics.component.html',
   styleUrl: './analytics.component.scss'
 })
-export class AnalyticsComponent extends  BaseComponent implements OnInit {
+export class AnalyticsComponent extends  BaseComponent implements OnInit, OnDestroy {
 
   doToken: string = "";
   doID: string = "";
   ref: DynamicDialogRef | undefined;
   originalClose: any;
   _person: any;
-  _showFilters: boolean = false
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -70,7 +65,9 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
     this.analyticsService.consumptionPatterns.next(item);
   }
 
-  onOpenActionMarketing(){
+
+  // Envio de mensagens
+  onSendMessage(){
     this.ref = this.dialogService.open(ActionMarketingComponent,
       {
         header: "Efetuar ação de marketing",
@@ -94,8 +91,8 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
     };
   }
 
-
-  onBachShipping(){
+  // sairá fora
+  onActionMarketing(){
     this.ref = this.dialogService.open(BatchShippingComponent,
       {
         header: "Envio em lote",
@@ -119,7 +116,6 @@ export class AnalyticsComponent extends  BaseComponent implements OnInit {
     };
   }
 
-  onShowFilter() {
-    this._showFilters = !this._showFilters;
+  ngOnDestroy(): void {
   }
 }

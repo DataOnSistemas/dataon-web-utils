@@ -7,36 +7,51 @@ import {RequestData} from "../../shared/components/inputs/request-data";
 import {SharedCommonModule} from "../../shared/common/shared-common.module";
 import {BaseComponent} from "../../shared/components/inputs/base-component";
 import {LoadingService} from "../../shared/services/loading/loading.service";
+import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
+import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
+import {ActionsService} from "../../services/actions/actions.service";
+import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
 
 @Component({
   selector: 'app-last-purchase',
   standalone: true,
   imports: [
     DatatableComponent,
-    SharedCommonModule
+    SharedCommonModule,
+    ButtonsHeaderComponent,
+    LastPurchaseProductsComponent
   ],
   providers: [
-    AnalyticsService
+    AnalyticsService,
+    ActionsService
   ],
   templateUrl: './last-purchase.component.html',
   styleUrl: './last-purchase.component.scss'
 })
 export class LastPurchaseComponent extends BaseComponent implements OnInit {
 
+  protected _uesNo: any = yesNo;
+  protected _clientsNotSale: any = clientsNotSale;
+  protected _clientsWhat: any = clientsWhat;
+  protected _clientsinvoicing: any = clientsinvoicing;
+
   @Output() selectedPurchase: EventEmitter<any> = new EventEmitter<void>();
 
   configuration: LastPurchaseConfig = new LastPurchaseConfig();
   datatable: DataTable = new DataTable();
+  _onSelectedItem: any;
 
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
+    private readonly actionsService: ActionsService
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
   }
 
   onLoadLastPurchase(requestData: RequestData): void {
+    this.onSetFilters(requestData);
     this.loadingService.showLoading.next(true);
     this.analyticsService.lastSale(requestData).subscribe({
       next: data => {
@@ -54,7 +69,24 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedData(item: any){
-    this.selectedPurchase.emit(item);
+    this._onSelectedItem = item;
+    this.analyticsService.consumptionPatterns.next(item);
+  }
+
+  private onSetFilters(requestData: RequestData) {
+    requestData.filter = ` and nome like '%${requestData.inputFilter}%' `;
+  }
+
+  onActionMarketing() {
+    this.actionsService.onActionMarketing(this._onSelectedItem);
+  }
+
+  onSendMessage() {
+    this.actionsService.onSendMessage(this._onSelectedItem);
+  }
+
+  onLoadFilter(){
+
   }
 
 }
