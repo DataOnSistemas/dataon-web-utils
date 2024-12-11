@@ -7,15 +7,19 @@ import {LoadingService} from "../../shared/services/loading/loading.service";
 import {DatatableComponent} from "../../shared/components/datatable/datatable/datatable.component";
 import {RequestData} from "../../shared/components/inputs/request-data";
 import {BirthdaysConfig} from "./birthdays.config";
+import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
+import {ActionsService} from "../../services/actions/actions.service";
 
 @Component({
   selector: 'app-birthdays',
   standalone: true,
-  imports: [
-    DatatableComponent
-  ],
+    imports: [
+        DatatableComponent,
+        ButtonsHeaderComponent
+    ],
   providers: [
-    AnalyticsService
+    AnalyticsService,
+    ActionsService
   ],
   templateUrl: './birthdays.component.html',
   styleUrl: './birthdays.component.scss'
@@ -28,6 +32,7 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
+    private readonly actionsService: ActionsService
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
@@ -64,4 +69,15 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
     return requestData;
   }
 
+  onActionMarketing() {
+    this.actionsService.onActionMarketing(null);
+  }
+
+  onSendMessage() {
+    this.actionsService.onSendMessage(null);
+  }
+
+  onLoadFilter(){
+
+  }
 }

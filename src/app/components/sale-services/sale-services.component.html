@@ -1,6 +1,17 @@
-<app-datatable
-  [config]="datatable"
-  dataKey="IDProduto"
-  (onSelectedRegister)="onSelectedData($event)"
-  (onPageChange)="onLoadData($event)">
-</app-datatable>
+
+<app-buttons-header
+  (_onActionMarketing)="onActionMarketing()"
+  (_onSendMessage)="onSendMessage()"
+  (_onFilter)="onLoadFilter()"
+  context="Serviços"
+></app-buttons-header>
+<div  class="formgrid grid">
+  <div class="c-margin col-12 md:col-12">
+    <app-datatable
+      [config]="datatable"
+      dataKey="IDProduto"
+      (onSelectedRegister)="onSelectedData($event)"
+      (onPageChange)="onLoadData($event)">
+    </app-datatable>
+  </div>
+</div>

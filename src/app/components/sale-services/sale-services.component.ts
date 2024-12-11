@@ -7,15 +7,19 @@ import {SaleServicesConfig} from "./sale-services.config";
 import {AnalyticsService} from "../../services/analytics/analytics.service";
 import {LoadingService} from "../../shared/services/loading/loading.service";
 import {RequestData} from "../../shared/components/inputs/request-data";
+import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
+import {ActionsService} from "../../services/actions/actions.service";
 
 @Component({
   selector: 'app-sale-services',
   standalone: true,
-  imports: [
-    DatatableComponent
-  ],
+    imports: [
+        DatatableComponent,
+        ButtonsHeaderComponent
+    ],
   providers: [
-    AnalyticsService
+    AnalyticsService,
+    ActionsService
   ],
   templateUrl: './sale-services.component.html',
   styleUrl: './sale-services.component.scss'
@@ -28,6 +32,7 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
+    private readonly actionsService: ActionsService
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
@@ -61,5 +66,18 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
     var requestData = new RequestData();
     requestData.order = ""
     return requestData;
+  }
+
+
+  onActionMarketing() {
+    this.actionsService.onActionMarketing(null);
+  }
+
+  onSendMessage() {
+    this.actionsService.onSendMessage(null);
+  }
+
+  onLoadFilter(){
+
   }
 }

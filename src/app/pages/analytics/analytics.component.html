@@ -16,37 +16,16 @@
           </app-last-purchase>
         </p-tabpanel>
         <p-tabpanel value="1"  *ngIf="true">
-          <div class="expiring formgrid grid">
-            <app-buttons-header
-              class="col-12 md:col-12"
-              (_onActionMarketing)="onActionMarketing()"
-              (_onSendMessage)="onSendMessage()"
-              context="Produtos a vencer"
-            ></app-buttons-header>
-            <app-expiring-products class="expiring col-12 md:col-12"></app-expiring-products>
-          </div>
+          <app-expiring-products
+            class=" col-12 md:col-12">
+          </app-expiring-products>
         </p-tabpanel >
         <p-tabpanel value="2" *ngIf="true">
-          <div class="formgrid grid">
-            <app-buttons-header
-              class="col-12 md:col-12"
-              (_onActionMarketing)="onActionMarketing()"
-              (_onSendMessage)="onSendMessage()"
-              context="Serviços"
-            ></app-buttons-header>
-            <app-sale-services class="expiring col-12 md:col-12"></app-sale-services>
-          </div>
+          <app-sale-services class="expiring col-12 md:col-12"></app-sale-services>
         </p-tabpanel>
         <p-tabpanel value="3" *ngIf="true">
-          <div class="formgrid grid">
-            <app-buttons-header
-              class="col-12 md:col-12"
-              (_onActionMarketing)="onActionMarketing()"
-              (_onSendMessage)="onSendMessage()"
-              context="Aniversariantes da semana"
-            ></app-buttons-header>
-            <app-birthdays class="expiring col-12 md:col-12"></app-birthdays>
-          </div>
+          <app-birthdays class="col-12 md:col-12">
+          </app-birthdays>
         </p-tabpanel>
       </p-tabpanels>
     </p-tabs>
