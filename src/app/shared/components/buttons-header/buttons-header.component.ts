@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ButtonModule} from "primeng/button";
 import {Ripple} from "primeng/ripple";
 import {SidebarModule} from "primeng/sidebar";
+import { DrawerModule } from 'primeng/drawer';
 
 @Component({
   selector: 'app-buttons-header',
@@ -9,7 +10,7 @@ import {SidebarModule} from "primeng/sidebar";
   imports: [
     ButtonModule,
     Ripple,
-    SidebarModule
+    DrawerModule
   ],
   templateUrl: './buttons-header.component.html',
   styleUrl: './buttons-header.component.scss'

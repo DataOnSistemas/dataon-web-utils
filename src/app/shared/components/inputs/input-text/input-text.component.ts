@@ -6,10 +6,11 @@ import {TooltipModule} from "primeng/tooltip";
 import {CommonModule} from "@angular/common";
 import {InputTextModule} from "primeng/inputtext";
 import {FloatLabelModule} from "primeng/floatlabel";
-import { InputTextareaModule } from 'primeng/inputtextarea';
+
 import { AutoFocusModule } from 'primeng/autofocus';
 import {AutoCompleteModule} from "primeng/autocomplete";
 import {AppControlValueAccessor} from "../app-control-value";
+import {TextareaModule} from "primeng/textarea";
 
 @Component({
   selector: 'app-input-text',
@@ -21,7 +22,7 @@ import {AppControlValueAccessor} from "../app-control-value";
     ReactiveFormsModule,
     FloatLabelModule,
     TooltipModule,
-    InputTextareaModule,
+    TextareaModule ,
     AutoFocusModule,
     AutoCompleteModule
   ],

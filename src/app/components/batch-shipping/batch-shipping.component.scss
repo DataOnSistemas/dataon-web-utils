@@ -1,0 +1,10 @@
+:host::ng-deep {
+  .p-picklist {
+    height: 500px;
+  }
+  .p-listbox-list-container{
+    height: 450px !important;
+    max-height: 450px !important;
+  }
+}
+

@@ -1,7 +1,7 @@
 export class DynamicQuery {
     doID: number = 0;
     route: string = "";
-    doIDUser: number = -100;
+    doIDUser?: number = -100;
     context: string = "";
     criterion: string = "";
     sorters?: string = "";
