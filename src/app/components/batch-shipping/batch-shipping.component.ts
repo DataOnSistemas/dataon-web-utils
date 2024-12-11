@@ -18,6 +18,7 @@ import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared
 import {PickListSourceFilterEvent} from "primeng/picklist";
 import {WhatsappService} from "../../services/whatsapp.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
+import {TimeInterval} from "rxjs/internal/operators/timeInterval";
 
 
 @Component({
@@ -96,46 +97,42 @@ export class BatchShippingComponent implements OnInit {
   }
 
   async onValidAndSend() {
-    this.loadingService.showLoading.next(true);
-
+    this.toastService.info({summary: "Mensagem", detail: "Enviando mensagens"});
     if(this.formGroup.valid) {
-      for (const item of this._selectedPerson) {
-        this.formGroup.patchValue({
-          name: item["NOME"],
-          number: item["FONE_CELULAR"],
-        });
-        await this.onSend();
-      }
-      this.loadingService.showLoading.next(false);
+      this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
+        next: async (data) =>  {
+          for (const item of this._selectedPerson) {
+            this.formGroup.patchValue({
+              name: item["NOME"],
+              number: item["FONE_CELULAR"],
+            });
+            await this.onSend(this.formGroup, data);
+          }
+        }
+      });
     }else {
       this.fieldsService.verifyIsValid();
-      this.loadingService.showLoading.next(false);
     }
 
   }
 
-  async onSend() {
-    this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
+  async onSend(formGroup: FormGroup, data: any) {
+    var dto = this.configuration.convertToDTO(formGroup);
+    dto.message = this.whatsappService.htmlToTextWhats(dto.message);
+    this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
       next: data => {
-        var dto = this.configuration.convertToDTO(this.formGroup);
-        dto.message = this.whatsappService.htmlToTextWhats(dto.message);
-        this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
-          next: data => {
-            if(data.RetWm === "success"){
-              this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
-              this.ref.close(null);
-            } else {
-              this.toastService.error({summary: "Mensagem", detail: data.info});
-            }
-
-          },
-          error: err => {
-            this.toastService.error({summary: "Mensagem", detail: err.message});
-            this.loadingService.showLoading.next(false);
-          }
-        })
+        if(data.RetWm === "success"){
+          this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
+          this.ref.close(null);
+        } else {
+          this.toastService.error({summary: "Mensagem", detail: data.info});
+        }
+      },
+      error: err => {
+        this.toastService.error({summary: "Mensagem", detail: err.message});
+        this.loadingService.showLoading.next(false);
       }
-    });
+    })
   }
 
   onSelectMessage(item: any){
