@@ -9,17 +9,23 @@ import {RequestData} from "../../shared/components/inputs/request-data";
 import {BirthdaysConfig} from "./birthdays.config";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {ActionsService} from "../../services/actions/actions.service";
+import {Toast, ToastService} from "../../shared/services/toast/toast.service";
+import {Button} from "primeng/button";
+import {BatchShipping} from "../../interfaces/batch-shipping";
+
 
 @Component({
   selector: 'app-birthdays',
   standalone: true,
-    imports: [
-        DatatableComponent,
-        ButtonsHeaderComponent
-    ],
+  imports: [
+    DatatableComponent,
+    ButtonsHeaderComponent,
+    Button
+  ],
   providers: [
     AnalyticsService,
-    ActionsService
+    ActionsService,
+    ToastService
   ],
   templateUrl: './birthdays.component.html',
   styleUrl: './birthdays.component.scss'
@@ -28,11 +34,17 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
 
   datatable: DataTable = new DataTable();
   configuration: BirthdaysConfig = new BirthdaysConfig();
+  _currentID: any = "";
+  toast: Toast = {
+    summary: "Mensagem",
+    detail: ""
+  }
 
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
-    private readonly actionsService: ActionsService
+    private readonly actionsService: ActionsService,
+    private readonly toastService: ToastService
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
@@ -44,7 +56,7 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedData($event: any){
-
+    this._currentID = $event.ID;
   }
 
   onLoadData(requestData: any) {
@@ -60,7 +72,7 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
       error: err => {
         this.loadingService.showLoading.next(false);
       }
-    })
+    });
   }
 
   onSetFilters(): RequestData {
@@ -69,15 +81,30 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
     return requestData;
   }
 
-  onActionMarketing() {
-    this.actionsService.onActionMarketing(null);
-  }
+
 
   onSendMessage() {
-    this.actionsService.onSendMessage(null);
+    if(this._currentID){
+      this.actionsService.onSendMessage({IDPessoa: this._currentID});
+    } else {
+      this.toast.detail = "Selecione um registro"
+      this.toastService.warn(this.toast)
+    }
   }
 
   onLoadFilter(){
 
+  }
+
+  onPage($event: any) {
+    this.onLoadData(this.onSetFilters());
+  }
+
+  onSendMessagesBatch() {
+    let person: Partial<BatchShipping> = {
+      person: this.configuration.onConvertBatchShipping(this.datatable.values),
+      enableSearClients: false
+    }
+    this.actionsService.onActionMarketing(person)
   }
 }

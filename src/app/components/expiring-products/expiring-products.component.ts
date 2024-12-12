@@ -10,7 +10,6 @@ import {BaseComponent} from "../../shared/components/inputs/base-component";
 import {RequestData} from "../../shared/components/inputs/request-data";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {ActionsService} from "../../services/actions/actions.service";
-import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
 
 @Component({
   selector: 'app-expiring-products',
@@ -19,7 +18,6 @@ import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purc
     SharedCommonModule,
     DatatableComponent,
     ButtonsHeaderComponent,
-    LastPurchaseProductsComponent
   ],
   providers: [
     AnalyticsService,
@@ -48,7 +46,7 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedData($event: any){
-
+    console.log("fd")
   }
 
   onLoadLastPurchase(requestData: any) {

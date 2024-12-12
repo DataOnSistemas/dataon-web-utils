@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { MessageServiceEnum } from './message-service-enum';
 
-interface Toast {
+export interface Toast {
   summary: string;
   detail: string;
 }
