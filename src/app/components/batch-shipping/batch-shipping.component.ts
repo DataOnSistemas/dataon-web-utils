@@ -123,7 +123,7 @@ export class BatchShippingComponent implements OnInit {
           this._selectedPerson.forEach(item => {
             this.whatsappService.updateVariable({
               fone: (item["FONE_CELULAR"] ? item["FONE_CELULAR"] : item["FONE"]),
-              message: this.configuration.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.formGroup.get("message")?.value),item),
+              message: this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.formGroup.get("message")?.value),item),
               name: item["NOME"],
               id: generateUUIDv4(),
               origin: this.formGroup.get("messageModel")?.value["NOME"]

@@ -33,6 +33,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
 
   public formGroup: FormGroup;
   private configuration: ActionMarketingConfig = new ActionMarketingConfig();
+  private person: any;
 
 
 
@@ -63,7 +64,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
       this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
         next: data => {
           var dto = this.configuration.convertToDTO(this.formGroup);
-          dto.message = this.whatsappService.htmlToTextWhats(dto.message);
+          dto.message = this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(dto.message),this.person);
           this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
             next: data => {
               this.loadingService.showLoading.next(false);
@@ -103,6 +104,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
     this.requestService.get(`cadastros/Pessoa/GetData?doID=${this.cookiesService.get(EnumCookie.DOID)}&ID=${idpessoa}`,null).subscribe({
       next: (data) => {
         this.loadingService.showLoading.next(false);
+        this.person = data.obj;
         this.formGroup.patchValue(
           {
             name: data.obj.Nome,

@@ -89,4 +89,10 @@ export class WhatsappService {
     textArea.innerHTML = html;
     return textArea.value;
   }
+
+  onReplaceVariable(message: string, person: any, complany?: any, product?: any[]): string{
+
+    message = message.replace("vetClienteNome",person["NOME"] || person["Nome"]);
+    return message;
+  }
 }

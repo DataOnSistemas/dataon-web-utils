@@ -188,11 +188,7 @@ export class BatchShippingConfig {
     return dto;
   }
 
-  onReplaceVariable(message: string, person: any, complany?: any, product?: any[]): string{
 
-    message = message.replace("vetClienteNome",person["NOME"]);
-    return message;
-  }
 
 
 }
