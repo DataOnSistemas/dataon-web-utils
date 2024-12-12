@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 export class LoadingService {
 
   showLoading   = new Subject<boolean>();
+   processing = new Subject<boolean>();
 
   constructor() { }
 }

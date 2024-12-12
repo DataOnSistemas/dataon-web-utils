@@ -16,4 +16,5 @@ export class BirthdaysConfig {
       customValue: "DATE"
     }
   ];
+
 }

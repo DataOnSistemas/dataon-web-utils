@@ -1,3 +1,6 @@
+.custom-drawer {
+  height: 40vh; /* Altura padrão */
+}
 .btns {
   display: flex;
 }
@@ -7,4 +10,11 @@
 .header{
   font-size: 20px;
   font-weight: bold;
+  display: flex;
+  .icon-send{
+    margin-left: 10px;
+    cursor: pointer;
+  }
 }
+
+

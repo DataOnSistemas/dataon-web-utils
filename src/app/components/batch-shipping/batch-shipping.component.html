@@ -1,6 +1,6 @@
-<p-tabs value="0">
+<p-tabs [value]="_activeTab">
   <p-tablist>
-    <p-tab value="0">Selecione os clientes</p-tab>
+    <p-tab *ngIf="_showTabClients" value="0">Selecione os clientes</p-tab>
     <p-tab value="1">Modelo de mensagem</p-tab>
   </p-tablist>
   <p-tabpanels>
@@ -68,7 +68,7 @@
     <p-button  label="Cancelar" (onClick)="onCancel()"/>
   </div>
   <div>
-    <p-button  label="Enviar" (onClick)="onValidAndSend()"/>
+    <p-button  label="Enviar" (onClick)="onBatchSend()"/>
   </div>
 </div>
 <p-drawer header="Filtros" position="left" [(visible)]="_showFilters">

@@ -10,7 +10,9 @@ import {BaseComponent} from "../../shared/components/inputs/base-component";
 import {RequestData} from "../../shared/components/inputs/request-data";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {ActionsService} from "../../services/actions/actions.service";
-import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
+import {BatchShipping} from "../../interfaces/batch-shipping";
+import {BatchShippingConfig} from "../batch-shipping/batch-shipping.config";
+import {ConverterService} from "../../services/converter/converter.service";
 
 @Component({
   selector: 'app-expiring-products',
@@ -19,7 +21,6 @@ import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purc
     SharedCommonModule,
     DatatableComponent,
     ButtonsHeaderComponent,
-    LastPurchaseProductsComponent
   ],
   providers: [
     AnalyticsService,
@@ -37,7 +38,8 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
   constructor(
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
-    private readonly actionsService: ActionsService
+    private readonly actionsService: ActionsService,
+    private readonly converterService: ConverterService,
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
@@ -48,7 +50,7 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedData($event: any){
-
+    console.log("fd")
   }
 
   onLoadLastPurchase(requestData: any) {
@@ -90,4 +92,11 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
 
   }
 
+  onCampaign() {
+    let product: Partial<BatchShipping> = {
+      products: this.converterService.onConvertBatchShippingProduct(this.datatable.values),
+      enableSearClients: true
+    }
+    this.actionsService.onActionMarketing(product);
+  }
 }

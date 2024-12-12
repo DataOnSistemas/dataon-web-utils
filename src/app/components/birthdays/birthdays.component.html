@@ -1,16 +1,24 @@
 
 <app-buttons-header
-  (_onActionMarketing)="onActionMarketing()"
   (_onSendMessage)="onSendMessage()"
   (_onFilter)="onLoadFilter()"
-  context="Aniversariantes da semana"
-></app-buttons-header>
+  [actionMarketing]="false"
+  [filter]="false"
+  [sendMessage]="true"
+  context="Aniversariantes da semana">
+<div buttons>
+  <div>
+    <p-button (onClick)="onSendMessagesBatch()" label="Enviar para todos aniversariantes"/>
+  </div>
+</div>
+</app-buttons-header>
 <div  class="formgrid grid">
   <div class="c-margin col-12 md:col-12">
     <app-datatable
       [config]="datatable"
       dataKey="ID"
-      [showPagination]="false"
+      [showPagination]="true"
+      (onPageChange)="onPage($event)"
       (onSelectedRegister)="onSelectedData($event)">
     </app-datatable>
   </div>

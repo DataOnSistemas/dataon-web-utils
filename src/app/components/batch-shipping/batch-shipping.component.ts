@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoadingService} from "../../shared/services/loading/loading.service";
 import {DynamicQueryService} from "../../services/dynamic-query/dynamic-query.service";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
@@ -16,9 +16,10 @@ import {DataTable} from "../../shared/components/datatable/datatable/datatable";
 import {Drawer} from "primeng/drawer";
 import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
 import {PickListSourceFilterEvent} from "primeng/picklist";
-import {WhatsappService} from "../../services/whatsapp.service";
+import {IBathMessages, WhatsappService} from "../../services/whatsapp/whatsapp.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
-import {TimeInterval} from "rxjs/internal/operators/timeInterval";
+import {generateUUIDv4} from "../../shared/common/functions-utils";
+
 
 
 @Component({
@@ -46,14 +47,20 @@ export class BatchShippingComponent implements OnInit {
   protected readonly _clientsWhat = clientsWhat;
   protected readonly _clientsinvoicing = clientsinvoicing;
 
-  public _allPerson: any[] = [];
-  public _selectedPerson: any[] = [];
-  public table: DataTable = new DataTable();
+  private readonly configuration: BatchShippingConfig = new BatchShippingConfig(this.cookiesService);
+
   public readonly formGroup: FormGroup;
   public readonly filterFormGroup: FormGroup;
-  public _showFilters: boolean = false;
 
-  private readonly configuration: BatchShippingConfig = new BatchShippingConfig(this.cookiesService);
+
+
+  public _allPerson: any[] = [];
+  public _selectedPerson: any[] = [];
+  public _showFilters: boolean = false;
+  public _activeTab: string = "0";
+  public _showTabClients: boolean = true;
+  public table: DataTable = new DataTable();
+
 
 
   constructor(
@@ -66,6 +73,7 @@ export class BatchShippingComponent implements OnInit {
     private readonly requestService: RequestService,
     private readonly whatsappService: WhatsappService,
     private readonly toastService: ToastService,
+    private readonly changeDetector: ChangeDetectorRef,
   ) {
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
     this.filterFormGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.filterFields);
@@ -73,6 +81,16 @@ export class BatchShippingComponent implements OnInit {
 
 
   ngOnInit(): void {
+    let bathConfig = this.config.data;
+    if(bathConfig){
+      if(!bathConfig.enableSearClients){
+        this._activeTab = "1";
+        this._showTabClients = false;
+        this._selectedPerson = bathConfig?.person;
+      }
+      this.changeDetector.detectChanges();
+    }
+
     this.onGetAllPersons(this.configuration.dynamicQuery);
     this.setDefaultFilters();
   }
@@ -96,43 +114,26 @@ export class BatchShippingComponent implements OnInit {
     })
   }
 
-  async onValidAndSend() {
-    this.toastService.info({summary: "Mensagem", detail: "Enviando mensagens"});
-    if(this.formGroup.valid) {
+  onBatchSend(){
+    if(this.formGroup.valid){
+      // carrego os planos da empresa
       this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
-        next: async (data) =>  {
-          for (const item of this._selectedPerson) {
-            this.formGroup.patchValue({
+        next: (res) => {
+          this.toastService.info({summary: "DataOn", detail: "Enviando mensagens..."})
+          this._selectedPerson.forEach(item => {
+            this.whatsappService.updateVariable({
+              fone: (item["FONE_CELULAR"] ? item["FONE_CELULAR"] : item["FONE"]),
+              message: this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.formGroup.get("message")?.value),item),
               name: item["NOME"],
-              number: item["FONE_CELULAR"],
+              id: generateUUIDv4(),
+              origin: this.formGroup.get("messageModel")?.value["NOME"]
             });
-            await this.onSend(this.formGroup, data);
-          }
+          });
+          this.whatsappService.batch(generateUUIDv4(), true, res.obj);
+          this.onCancel();
         }
       });
-    }else {
-      this.fieldsService.verifyIsValid();
     }
-
-  }
-
-  async onSend(formGroup: FormGroup, data: any) {
-    var dto = this.configuration.convertToDTO(formGroup);
-    dto.message = this.whatsappService.htmlToTextWhats(dto.message);
-    this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
-      next: data => {
-        if(data.RetWm === "success"){
-          this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
-          this.ref.close(null);
-        } else {
-          this.toastService.error({summary: "Mensagem", detail: data.info});
-        }
-      },
-      error: err => {
-        this.toastService.error({summary: "Mensagem", detail: err.message});
-        this.loadingService.showLoading.next(false);
-      }
-    })
   }
 
   onSelectMessage(item: any){
@@ -180,4 +181,5 @@ export class BatchShippingComponent implements OnInit {
       comfaturamento: this._clientsinvoicing.find(e => e.key === 0),
     })
   }
+
 }

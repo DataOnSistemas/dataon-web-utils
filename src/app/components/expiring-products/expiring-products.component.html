@@ -1,9 +1,15 @@
 <app-buttons-header
-  (_onActionMarketing)="onActionMarketing()"
-  (_onSendMessage)="onSendMessage()"
+  [sendMessage]="false"
+  [actionMarketing]="false"
+  [filter]="false"
   (_onFilter)="onLoadFilter()"
-  context="Produtos a vencer"
-></app-buttons-header>
+  context="Produtos a vencer">
+  <div buttons>
+    <div>
+      <p-button (onClick)="onCampaign()" label="Campanha de promoções"/>
+    </div>
+  </div>
+</app-buttons-header>
 <div  class="formgrid grid">
   <div class="c-margin col-12 md:col-12">
     <app-datatable

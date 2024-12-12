@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {DialogService, DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ActionMarketingComponent} from "../../components/action-marketing/action-marketing.component";
 import {BatchShippingComponent} from "../../components/batch-shipping/batch-shipping.component";
+import {BatchShipping} from "../../interfaces/batch-shipping";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +17,10 @@ export class ActionsService {
     private readonly dialogService: DialogService
   ){}
 
-
   onSendMessage(data: any){
     this.ref = this.dialogService.open(ActionMarketingComponent,
       {
-        header: "Efetuar ação de marketing",
+        header: "Enviar mensagem",
         width: '80vw',
         modal:true,
         closable: true,
@@ -42,10 +42,10 @@ export class ActionsService {
     };
   }
 
-  onActionMarketing(data: any){
+  onActionMarketing(data: BatchShipping | Partial<BatchShipping> | null){
     this.ref = this.dialogService.open(BatchShippingComponent,
       {
-        header: "Envio em lote",
+        header: "Ação de marketing",
         width: '80vw',
         modal:true,
         closable: true,
