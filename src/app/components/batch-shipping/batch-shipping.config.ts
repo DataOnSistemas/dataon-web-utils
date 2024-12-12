@@ -188,7 +188,4 @@ export class BatchShippingConfig {
     return dto;
   }
 
-
-
-
 }

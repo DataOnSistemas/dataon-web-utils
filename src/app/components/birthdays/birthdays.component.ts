@@ -12,6 +12,8 @@ import {ActionsService} from "../../services/actions/actions.service";
 import {Toast, ToastService} from "../../shared/services/toast/toast.service";
 import {Button} from "primeng/button";
 import {BatchShipping} from "../../interfaces/batch-shipping";
+import {BatchShippingConfig} from "../batch-shipping/batch-shipping.config";
+import {ConverterService} from "../../services/converter/converter.service";
 
 
 @Component({
@@ -44,7 +46,8 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
     private readonly actionsService: ActionsService,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly converterService: ConverterService,
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
@@ -102,7 +105,7 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
 
   onSendMessagesBatch() {
     let person: Partial<BatchShipping> = {
-      person: this.configuration.onConvertBatchShipping(this.datatable.values),
+      person: this.converterService.onConvertBatchShippingPerson(this.datatable.values),
       enableSearClients: false
     }
     this.actionsService.onActionMarketing(person)

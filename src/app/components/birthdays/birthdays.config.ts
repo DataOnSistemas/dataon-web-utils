@@ -17,14 +17,4 @@ export class BirthdaysConfig {
     }
   ];
 
-  onConvertBatchShipping(persons: any[]): any[] {
-    const batchPerson = structuredClone(persons);
-
-    batchPerson.forEach((person: any) => {
-      person["NOME"] = person.nome;
-      person["FONE_CELULAR"] = person.Fone;
-    })
-
-    return batchPerson;
-  }
 }
