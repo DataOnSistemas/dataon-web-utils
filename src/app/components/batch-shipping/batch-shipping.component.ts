@@ -16,9 +16,10 @@ import {DataTable} from "../../shared/components/datatable/datatable/datatable";
 import {Drawer} from "primeng/drawer";
 import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
 import {PickListSourceFilterEvent} from "primeng/picklist";
-import {WhatsappService} from "../../services/whatsapp.service";
+import {IBathMessages, WhatsappService} from "../../services/whatsapp/whatsapp.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
-import e from "express";
+import {generateUUIDv4} from "../../shared/common/functions-utils";
+
 
 
 @Component({
@@ -39,7 +40,7 @@ import e from "express";
   templateUrl: './batch-shipping.component.html',
   styleUrl: './batch-shipping.component.scss'
 })
-export class BatchShippingComponent implements OnInit, AfterViewInit {
+export class BatchShippingComponent implements OnInit {
 
   protected readonly _uesNo = yesNo;
   protected readonly _clientsNotSale = clientsNotSale;
@@ -56,7 +57,7 @@ export class BatchShippingComponent implements OnInit, AfterViewInit {
   public _allPerson: any[] = [];
   public _selectedPerson: any[] = [];
   public _showFilters: boolean = false;
-  public _activeTab: number = 0;
+  public _activeTab: string = "0";
   public _showTabClients: boolean = true;
   public table: DataTable = new DataTable();
 
@@ -80,6 +81,16 @@ export class BatchShippingComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+    let bathConfig = this.config.data;
+    if(bathConfig){
+      if(!bathConfig.enableSearClients){
+        this._activeTab = "1";
+        this._showTabClients = false;
+        this._selectedPerson = bathConfig?.person;
+      }
+      this.changeDetector.detectChanges();
+    }
+
     this.onGetAllPersons(this.configuration.dynamicQuery);
     this.setDefaultFilters();
   }
@@ -103,43 +114,26 @@ export class BatchShippingComponent implements OnInit, AfterViewInit {
     })
   }
 
-  async onValidAndSend() {
-    this.toastService.info({summary: "Mensagem", detail: "Enviando mensagens"});
-    if(this.formGroup.valid) {
+  onBatchSend(){
+    if(this.formGroup.valid){
+      // carrego os planos da empresa
       this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
-        next: async (data) =>  {
-          for (const item of this._selectedPerson) {
-            this.formGroup.patchValue({
+        next: (res) => {
+          this.toastService.info({summary: "DataOn", detail: "Enviando mensagens..."})
+          this._selectedPerson.forEach(item => {
+            this.whatsappService.updateVariable({
+              fone: (item["FONE_CELULAR"] ? item["FONE_CELULAR"] : item["FONE"]),
+              message: this.configuration.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.formGroup.get("message")?.value),item),
               name: item["NOME"],
-              number: item["FONE_CELULAR"],
+              id: generateUUIDv4(),
+              origin: this.formGroup.get("messageModel")?.value["NOME"]
             });
-            await this.onSend(this.formGroup, data);
-          }
+          });
+          this.whatsappService.batch(generateUUIDv4(), true, res.obj);
+          this.onCancel();
         }
       });
-    }else {
-      this.fieldsService.verifyIsValid();
     }
-
-  }
-
-  async onSend(formGroup: FormGroup, data: any) {
-    var dto = this.configuration.convertToDTO(formGroup);
-    dto.message = this.whatsappService.htmlToTextWhats(dto.message);
-    this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
-      next: data => {
-        if(data.RetWm === "success"){
-          this.toastService.success({summary: "Mensagem", detail: "Enviado com sucesso"})
-          this.ref.close(null);
-        } else {
-          this.toastService.error({summary: "Mensagem", detail: data.info});
-        }
-      },
-      error: err => {
-        this.toastService.error({summary: "Mensagem", detail: err.message});
-        this.loadingService.showLoading.next(false);
-      }
-    })
   }
 
   onSelectMessage(item: any){
@@ -188,15 +182,4 @@ export class BatchShippingComponent implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit(): void {
-
-    let bathConfig = this.config.data;
-    if(bathConfig){
-      if(!bathConfig.enableSearClients){
-        this._activeTab = 1;
-        this._showTabClients = false;
-      }
-      this.changeDetector.detectChanges();
-    }
-  }
 }

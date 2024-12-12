@@ -81,9 +81,7 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
     return requestData;
   }
 
-  onActionMarketing() {
-    this.actionsService.onActionMarketing(null);
-  }
+
 
   onSendMessage() {
     if(this._currentID){
@@ -104,7 +102,7 @@ export class BirthdaysComponent extends BaseComponent implements OnInit {
 
   onSendMessagesBatch() {
     let person: Partial<BatchShipping> = {
-      person: this.datatable.values,
+      person: this.configuration.onConvertBatchShipping(this.datatable.values),
       enableSearClients: false
     }
     this.actionsService.onActionMarketing(person)

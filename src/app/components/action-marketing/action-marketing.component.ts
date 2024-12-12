@@ -9,7 +9,7 @@ import {RequestService} from "../../services/request/request.service";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
 import {EditorModule} from 'primeng/editor';
-import {WhatsappService} from "../../services/whatsapp.service";
+import {WhatsappService} from "../../services/whatsapp/whatsapp.service";
 import {LoadingService} from "../../shared/services/loading/loading.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
 
