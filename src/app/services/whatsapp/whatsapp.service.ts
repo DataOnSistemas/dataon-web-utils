@@ -5,6 +5,7 @@ import {CookieService} from "ngx-cookie-service";
 import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
 import {LoadingService} from "../../shared/services/loading/loading.service";
 import {generateUUIDv4} from "../../shared/common/functions-utils";
+import {BatchShipping} from "../../interfaces/batch-shipping";
 
 
 
@@ -56,29 +57,35 @@ export class WhatsappService {
       this.logs.push(log);
       sessionStorage.setItem("logs", JSON.stringify(this.logs));
     }
-    this.loadingService.processing.next(true);
+    this.loadingService.processing.next(false);
   }
 
   public sendMessage(message: string, number: string, planos: any) : Observable<any> {
-    return this.http.post(`dataOn/doWhats/sendText?doID=${this.cookieService.get(EnumCookie.DOID)}&doIDUser=-100&message=${message}&number=${number}`,planos);
+    const encodedMessage = encodeURIComponent(message);
+    return this.http.post(`dataOn/doWhats/sendText?doID=${this.cookieService.get(EnumCookie.DOID)}&doIDUser=-100&message=${encodedMessage}&number=${number}`,planos);
   }
 
 
   public htmlToTextWhats(message: string) : string {
 
-    const tagWhiteSpace = /(>|$)(\W|\n|\r)+</g;
+    const tagWhiteSpace = /(>|$)(\W|\r)+</g;
     const stripFormatting = /<[^>]*(>|$)/g;
     const lineBreak = /<(br|BR)\s*\/?>/g;
+
 
     let text = message;
 
     text = this.decodeHtmlEntities(text);
 
-    text = text.replace(tagWhiteSpace, '><');
+    //text = text.replace(tagWhiteSpace, '><');
 
     text = text.replace(lineBreak, '\n');
 
     text = text.replace(stripFormatting, '');
+
+    text = text.replace(/\n\s*\n/g, '\n\n');
+
+    text = text.trim();
 
     return text;
 
@@ -90,9 +97,17 @@ export class WhatsappService {
     return textArea.value;
   }
 
-  onReplaceVariable(message: string, person: any, complany?: any, product?: any[]): string{
+  onReplaceVariable(message: string, person: any, complany?: any, batchShipping?: BatchShipping | null): string{
 
     message = message.replace("vetClienteNome",person["NOME"] || person["Nome"]);
+
+    if(batchShipping){
+      let products = "";
+      batchShipping.products.forEach(item => {
+        products += `${item["Produto"]}\n`;
+      })
+      message += message.replace("vetProdutosPromocoes",products) ;
+    }
     return message;
   }
 }

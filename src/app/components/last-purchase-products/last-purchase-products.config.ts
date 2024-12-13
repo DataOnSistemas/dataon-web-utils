@@ -5,7 +5,7 @@ export class LastPurchaseProducts {
   datatatableConfig: Column[] = [
     {
       field: "Descricao",
-      header: "Descriçaã",
+      header: "Descrição",
       width: "55%",
       customValue: ""
     },

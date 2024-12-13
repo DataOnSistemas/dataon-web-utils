@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {BaseComponent} from "../../shared/components/inputs/base-component";
 import {FormGroup} from "@angular/forms";
 import {ActionMarketingConfig} from "./action-marketing.config";
@@ -8,7 +8,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {RequestService} from "../../services/request/request.service";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
-import {EditorModule} from 'primeng/editor';
+import {EditorModule, EditorTextChangeEvent} from 'primeng/editor';
 import {WhatsappService} from "../../services/whatsapp/whatsapp.service";
 import {LoadingService} from "../../shared/services/loading/loading.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
@@ -34,6 +34,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
   public formGroup: FormGroup;
   private configuration: ActionMarketingConfig = new ActionMarketingConfig();
   private person: any;
+  private currentEditorValue: string = "";
 
 
 
@@ -47,6 +48,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
     private readonly whatsappService: WhatsappService,
     private readonly loadingService: LoadingService,
     private readonly toastService: ToastService,
+    private cdRef: ChangeDetectorRef
   ) {
     super();
     this.formGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.fields);
@@ -64,7 +66,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
       this.requestService.get(`dataOn/PessoaDataOn/GetData?doID=999&id=${this.cookiesService.get(EnumCookie.DOID)}`,null).subscribe({
         next: data => {
           var dto = this.configuration.convertToDTO(this.formGroup);
-          dto.message = this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(dto.message),this.person);
+          dto.message = this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.currentEditorValue),this.person);
           this.whatsappService.sendMessage(dto.message, dto.number, data.obj).subscribe({
             next: data => {
               this.loadingService.showLoading.next(false);
@@ -93,6 +95,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
     this.requestService.get(`documentos/DocumentosModelos/GetData?doID=${this.cookiesService.get(EnumCookie.DOID)}&ID=${value.ID}`,null).subscribe({
       next: (data) => {
         this.formGroup.patchValue({message: data.obj.Documento});
+        this.currentEditorValue = data.obj.Documento;
       },
       error: error => {
       }
@@ -118,4 +121,7 @@ export class ActionMarketingComponent extends BaseComponent implements OnInit {
     });
   }
 
+  textChange($event: EditorTextChangeEvent) {
+    this.currentEditorValue = $event.textValue;
+  }
 }
