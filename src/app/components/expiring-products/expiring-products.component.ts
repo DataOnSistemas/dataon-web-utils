@@ -13,6 +13,9 @@ import {ActionsService} from "../../services/actions/actions.service";
 import {BatchShipping} from "../../interfaces/batch-shipping";
 import {BatchShippingConfig} from "../batch-shipping/batch-shipping.config";
 import {ConverterService} from "../../services/converter/converter.service";
+import {FormGroup} from "@angular/forms";
+import {FieldsService} from "../../shared/services/fields/fields.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-expiring-products',
@@ -25,6 +28,7 @@ import {ConverterService} from "../../services/converter/converter.service";
   providers: [
     AnalyticsService,
     ActionsService,
+    DatePipe
   ],
   templateUrl: './expiring-products.component.html',
   styleUrl: './expiring-products.component.scss'
@@ -33,34 +37,47 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
 
   datatable: DataTable = new DataTable();
   configuration: ExpiringProductsConfig = new ExpiringProductsConfig();
+  public readonly filterFormGroup: FormGroup;
 
 
   constructor(
+    private readonly fieldsService: FieldsService,
     private readonly analyticsService: AnalyticsService,
     private readonly loadingService: LoadingService,
     private readonly actionsService: ActionsService,
     private readonly converterService: ConverterService,
+    private readonly datePipe: DatePipe
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
+    this.filterFormGroup = this.fieldsService.onCreateFormBuiderDynamic(this.configuration.filterFields);
   }
 
   ngOnInit(): void {
-    this.onLoadLastPurchase(this.onSetFilters());
+
+    let date = new Date();
+    this.filterFormGroup.patchValue({
+      de: new Date(),
+      ate: new Date(date.setDate(date.getDate() + 60)),
+    })
+    this.onGetAll()
   }
 
   onSelectedData($event: any){
     console.log("fd")
   }
 
-  onLoadLastPurchase(requestData: any) {
+
+  onGetAll() {
     this.loadingService.showLoading.next(true);
-    this.analyticsService.getExpiringProducts(requestData).subscribe({
+    let dataIni = this.filterFormGroup.get("de")?.value;
+    let dataFIm = this.filterFormGroup.get("ate")?.value;
+    this.analyticsService.onWebInvokeloadProdutosLotes(dataFIm,dataIni,60,this.datePipe).subscribe({
       next: data => {
-        this.datatable.values = data.contents;
-        this.datatable.totalRecords = data.total;
-        this.datatable.size = data.size;
-        this.datatable.page = data.offset;
+        this.datatable.values = data;
+        this.datatable.totalRecords = data.length;
+        this.datatable.size = data.length;
+        this.datatable.page = 1;
         this.loadingService.showLoading.next(false);
       },
       error: err => {
@@ -69,27 +86,12 @@ export class ExpiringProductsComponent extends BaseComponent implements OnInit {
     })
   }
 
-  onSetFilters(): RequestData {
-    var requestData = new RequestData();
-    requestData.order = " order by Validade asc"
-    return requestData;
-  }
-
   onPage($event: any) {
-    $event.order = " order by Validade asc "
-    this.onLoadLastPurchase($event);
-  }
-
-  onActionMarketing() {
-    this.actionsService.onActionMarketing(null);
-  }
-
-  onSendMessage() {
-    this.actionsService.onSendMessage(null);
+    this.onGetAll();
   }
 
   onLoadFilter(){
-
+    this.onGetAll();
   }
 
   onCampaign() {

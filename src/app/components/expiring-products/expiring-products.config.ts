@@ -4,14 +4,14 @@ export class ExpiringProductsConfig {
 
   datatatableConfig: Column[] = [
     {
-      field: "Produto",
-      header: "Produto",
+      field: "Descricao",
+      header: "Descricao",
       width: "60%",
       customValue: ""
     },
     {
-      field: "total",
-      header: "Total",
+      field: "Quantidade",
+      header: "Quantidade",
       width: "10%",
       customValue: ""
     },
@@ -28,4 +28,19 @@ export class ExpiringProductsConfig {
       customValue: "DATE"
     }
   ];
+
+  filterFields: any[] = [
+    {
+      fieldName: 'de',
+      required: true,
+      hidden: false,
+      type: 'string'
+    },
+    {
+      fieldName: 'ate',
+      required: true,
+      hidden: false,
+      type: 'string'
+    },
+  ]
 }

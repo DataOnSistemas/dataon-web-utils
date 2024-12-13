@@ -1,13 +1,25 @@
 <app-buttons-header
   [sendMessage]="false"
   [actionMarketing]="false"
-  [filter]="false"
+  [filter]="true"
   (_onFilter)="onLoadFilter()"
   context="Produtos a vencer">
   <div buttons>
     <div>
       <p-button (onClick)="onCampaign()" label="Campanha de promoções"/>
     </div>
+  </div>
+  <div class="formgrid grid" fields [formGroup]="filterFormGroup">
+    <app-input-date
+      formControlName="de"
+      class="c-margin col-12 md:col-12"
+      label="De">
+    </app-input-date>
+    <app-input-date
+      formControlName="ate"
+      class="c-margin col-12 md:col-12"
+      label="Até">
+    </app-input-date>
   </div>
 </app-buttons-header>
 <div  class="formgrid grid">

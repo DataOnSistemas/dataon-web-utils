@@ -1,5 +1,6 @@
 :host::ng-deep {
-  .p-calendar{
+  .p-datepicker:has(.p-datepicker-input-icon-container) {
+    position: relative;
     width: 100%;
   }
 }
