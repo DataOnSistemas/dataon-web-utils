@@ -28,6 +28,7 @@
       type="text">
     </app-input-text>
     <p-editor
+      (onTextChange)="textChange($event)"
       class="field col-12 md:col-12 c-margin"
       formControlName="message"
       [style]="{ height: '320px' }"

@@ -30,12 +30,11 @@ export class ActionMarketingConfig{
   ]
 
   convertToDTO(formGroup: FormGroup): any {
-    let dto = {
+    return {
       messageModel: formGroup.get('messageModel')?.value,
       name: formGroup.get('name')?.value,
       number: formGroup.get('number')?.value,
       message: formGroup.get('message')?.value
     };
-    return dto;
   }
 }

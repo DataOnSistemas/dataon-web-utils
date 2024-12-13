@@ -10,7 +10,7 @@ import {FormGroup} from "@angular/forms";
 import {BatchShippingConfig} from "./batch-shipping.config";
 import {FieldsService} from "../../shared/services/fields/fields.service";
 import {RequestService} from "../../services/request/request.service";
-import {EditorModule} from "primeng/editor";
+import {EditorModule, EditorTextChangeEvent} from "primeng/editor";
 import {Paginator, PaginatorState} from "primeng/paginator";
 import {DataTable} from "../../shared/components/datatable/datatable/datatable";
 import {Drawer} from "primeng/drawer";
@@ -19,6 +19,7 @@ import {PickListSourceFilterEvent} from "primeng/picklist";
 import {IBathMessages, WhatsappService} from "../../services/whatsapp/whatsapp.service";
 import {ToastService} from "../../shared/services/toast/toast.service";
 import {generateUUIDv4} from "../../shared/common/functions-utils";
+import {BatchShipping} from "../../interfaces/batch-shipping";
 
 
 
@@ -59,6 +60,7 @@ export class BatchShippingComponent implements OnInit {
   public _showFilters: boolean = false;
   public _activeTab: string = "0";
   public _showTabClients: boolean = true;
+  public _bathConfig: BatchShipping | null = null;
   public table: DataTable = new DataTable();
 
 
@@ -81,12 +83,12 @@ export class BatchShippingComponent implements OnInit {
 
 
   ngOnInit(): void {
-    let bathConfig = this.config.data;
-    if(bathConfig){
-      if(!bathConfig.enableSearClients){
+    this._bathConfig = this.config.data;
+    if(this._bathConfig){
+      if(!this._bathConfig.enableSearClients){
         this._activeTab = "1";
         this._showTabClients = false;
-        this._selectedPerson = bathConfig?.person;
+        this._selectedPerson = this._bathConfig?.person;
       }
       this.changeDetector.detectChanges();
     }
@@ -123,7 +125,7 @@ export class BatchShippingComponent implements OnInit {
           this._selectedPerson.forEach(item => {
             this.whatsappService.updateVariable({
               fone: (item["FONE_CELULAR"] ? item["FONE_CELULAR"] : item["FONE"]),
-              message: this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.formGroup.get("message")?.value),item),
+              message: this.whatsappService.onReplaceVariable(this.whatsappService.htmlToTextWhats(this.formGroup.get("message")?.value),item,null,this._bathConfig),
               name: item["NOME"],
               id: generateUUIDv4(),
               origin: this.formGroup.get("messageModel")?.value["NOME"]
@@ -141,6 +143,7 @@ export class BatchShippingComponent implements OnInit {
     this.requestService.get(`documentos/DocumentosModelos/GetData?doID=${this.cookiesService.get(EnumCookie.DOID)}&ID=${value.ID}`,null).subscribe({
       next: (data) => {
         this.formGroup.patchValue({message: data.obj.Documento});
+        this.changeDetector.detectChanges();
       },
       error: error => {
       }
@@ -182,4 +185,7 @@ export class BatchShippingComponent implements OnInit {
     })
   }
 
+  textChange($event: EditorTextChangeEvent) {
+    console.log($event)
+  }
 }
