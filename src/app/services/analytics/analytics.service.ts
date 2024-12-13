@@ -4,6 +4,7 @@ import {Observable, Subject} from "rxjs";
 import {CookiesService} from "../../shared/services/cookies/cookies.service";
 import {EnumCookie} from "../../shared/services/cookies/cookie.enum";
 import {RequestData} from "../../shared/components/inputs/request-data";
+import {DatePipe} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class AnalyticsService {
 
   public getExpiringProducts(request: RequestData) : Observable<any> {
     return this.http.post(`analytics/GetExpiringProducts?doID=${this.coockieService.get(EnumCookie.DOID)}`, request);
+  }
+
+  public onWebInvokeloadProdutosLotes(pDataFim: Date,pDataIni: Date, diasAntes: number,datePipe: DatePipe) : Observable<any> {
+    return this.http.get(`suprimentos/ProdutosLotes/WebInvoke_loadProdutosLotes?doID=${this.coockieService.get(EnumCookie.DOID)}&pDiasAntes=${diasAntes}&pContexto=1&pDataFim=${datePipe.transform(pDataFim,'yyyy-MM-dd')}&pDataIni=${datePipe.transform(pDataIni,'yyyy-MM-dd')}`);
   }
 
   public getLastProducts(idpessoa: any) : Observable<any> {

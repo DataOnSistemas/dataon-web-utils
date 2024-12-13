@@ -104,9 +104,9 @@ export class WhatsappService {
     if(batchShipping){
       let products = "";
       batchShipping.products.forEach(item => {
-        products += `${item["Produto"]}\n`;
+        products += `${item["Descricao"]}\n`;
       })
-      message += message.replace("vetProdutosPromocoes",products) ;
+      message = message.replace("vetProdutosPromocoes",products) ;
     }
     return message;
   }
