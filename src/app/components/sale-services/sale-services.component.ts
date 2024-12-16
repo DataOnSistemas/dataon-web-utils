@@ -48,8 +48,9 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedData($event: any){
-    console.log("d");
     this.openDetails = true;
+    this.loadingService.showLoading.next(true);
+    //this.analyticsService.getAllConsumerByProduct()
   }
 
   onLoadData(requestData: any) {
