@@ -34,7 +34,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
       <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
-        <td [style]="'width:' + col.width " *ngFor="let col of columns">
+        <td  [style]="'width:' + col.width " *ngFor="let col of columns">
           {{ onRowData(rowData,col.field, col) }}
         </td>
       </tr>
@@ -53,3 +53,4 @@
     </ng-template>
   </p-table>
 </div>
+

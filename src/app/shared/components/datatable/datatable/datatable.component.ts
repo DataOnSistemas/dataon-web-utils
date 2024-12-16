@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { TableModule } from 'primeng/table';
 import {DataTable} from "./datatable";
 import {PaginatorModule, PaginatorState} from "primeng/paginator";
@@ -35,10 +35,12 @@ export class DatatableComponent {
   _filter: string = "";
 
   @Input() config: DataTable = new DataTable();
+  @Input() supportPopover: boolean = true;
   @Input() showPagination: boolean = true;
   @Input() dataKey: string = "";
   @Output() onPageChange: EventEmitter<any> = new EventEmitter();
   @Output() onSelectedRegister: EventEmitter<any> = new EventEmitter();
+
 
   constructor(
     private datePipe: DatePipe

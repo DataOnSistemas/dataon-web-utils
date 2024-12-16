@@ -87,7 +87,7 @@
   </div>
 </app-buttons-header>
 <div  class="formgrid grid">
-  <div class="c-margin col-12 md:col-5">
+  <div class="c-margin col-12 md:col-12">
     <app-datatable
       [config]="datatable"
       dataKey="IDPessoa"
@@ -95,9 +95,15 @@
       (onPageChange)="onLoadLastPurchase($event)">
     </app-datatable>
   </div>
-  <div class="c-margin col-12 md:col-7">
+</div>
+<p-drawer
+  [style]="{'height': '40rem', 'border-radius': '20px 20px 0 0'}"
+  header="Clientes que adiquiriramm este produto"
+  position="bottom"
+  [(visible)]="openDetails">
+  <div>
     <app-last-purchase-products>
     </app-last-purchase-products>
   </div>
-</div>
+</p-drawer>
 

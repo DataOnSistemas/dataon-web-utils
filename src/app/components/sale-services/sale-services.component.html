@@ -16,3 +16,26 @@
     </app-datatable>
   </div>
 </div>
+
+<p-drawer
+  [style]="{'height': '40rem', 'border-radius': '20px 20px 0 0'}"
+  header="Clientes que adiquiriramm este produto"
+  position="bottom"
+  [(visible)]="openDetails">
+  <div>
+    <p-table showGridlines [tableStyle]="{ 'min-width': '50rem' }">>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nome</th>
+          <th>Data Ultima compra</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-item>
+        <tr>
+          <td>{{ item.nome }}</td>
+          <td>{{ item.data }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</p-drawer>

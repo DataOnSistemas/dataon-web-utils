@@ -11,7 +11,6 @@ import {TableModule} from "primeng/table";
   selector: 'app-buttons-header',
   standalone: true,
   imports: [
-    NgFor,
     CommonModule,
     ButtonModule,
     Ripple,

@@ -11,6 +11,8 @@ import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/but
 import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
 import {ActionsService} from "../../services/actions/actions.service";
 import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
+import {Drawer} from "primeng/drawer";
+import {TableModule} from "primeng/table";
 
 @Component({
   selector: 'app-last-purchase',
@@ -19,7 +21,9 @@ import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared
     DatatableComponent,
     SharedCommonModule,
     ButtonsHeaderComponent,
-    LastPurchaseProductsComponent
+    LastPurchaseProductsComponent,
+    Drawer,
+    TableModule
   ],
   providers: [
     AnalyticsService,
@@ -40,6 +44,7 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
   configuration: LastPurchaseConfig = new LastPurchaseConfig();
   datatable: DataTable = new DataTable();
   _onSelectedItem: any;
+  openDetails: boolean = false;
 
   constructor(
     private readonly analyticsService: AnalyticsService,
@@ -71,6 +76,7 @@ export class LastPurchaseComponent extends BaseComponent implements OnInit {
   onSelectedData(item: any){
     this._onSelectedItem = item;
     this.analyticsService.consumptionPatterns.next(item);
+    this.openDetails = true;
   }
 
   private onSetFilters(requestData: RequestData) {

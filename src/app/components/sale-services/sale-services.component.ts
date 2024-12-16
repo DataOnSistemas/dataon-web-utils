@@ -9,14 +9,18 @@ import {LoadingService} from "../../shared/services/loading/loading.service";
 import {RequestData} from "../../shared/components/inputs/request-data";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {ActionsService} from "../../services/actions/actions.service";
+import {DrawerModule} from "primeng/drawer";
+import {TableModule} from "primeng/table";
 
 @Component({
   selector: 'app-sale-services',
   standalone: true,
-    imports: [
-        DatatableComponent,
-        ButtonsHeaderComponent
-    ],
+  imports: [
+    DatatableComponent,
+    ButtonsHeaderComponent,
+    DrawerModule,
+    TableModule
+  ],
   providers: [
     AnalyticsService,
     ActionsService
@@ -28,6 +32,7 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
 
   configuration: SaleServicesConfig = new SaleServicesConfig();
   datatable: DataTable = new DataTable();
+  openDetails: boolean = false;
 
   constructor(
     private readonly analyticsService: AnalyticsService,
@@ -43,7 +48,8 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
   }
 
   onSelectedData($event: any){
-
+    console.log("d");
+    this.openDetails = true;
   }
 
   onLoadData(requestData: any) {
