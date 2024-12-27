@@ -41,6 +41,7 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.datatable.fields = this.configuration.datatatableConfig;
+    this.configuration.datatableConsumers.fields = this.configuration.datatatableConsumerColumns;
   }
 
   ngOnInit(): void {
@@ -50,7 +51,18 @@ export class SaleServicesComponent extends BaseComponent implements OnInit {
   onSelectedData($event: any){
     this.openDetails = true;
     this.loadingService.showLoading.next(true);
-    //this.analyticsService.getAllConsumerByProduct()
+    this.analyticsService.getAllConsumerByProduct($event.IDProduto).subscribe({
+      next: data => {
+        this.configuration.datatableConsumers.values = data.contents;
+        this.configuration.datatableConsumers.totalRecords = data.total;
+        this.configuration.datatableConsumers.size = data.size;
+        this.configuration.datatableConsumers.page = data.offset;
+        this.loadingService.showLoading.next(false);
+      },
+      error: error => {
+        this.loadingService.showLoading.next(false);
+      }
+    })
   }
 
   onLoadData(requestData: any) {

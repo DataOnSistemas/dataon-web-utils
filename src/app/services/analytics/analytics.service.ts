@@ -36,7 +36,7 @@ export class AnalyticsService {
   }
 
   public getAllConsumerByProduct(idproduto: any) : Observable<any> {
-    return this.http.get(`analytics/getAllConsumerByProduct?doID=${this.coockieService.get(EnumCookie.DOID)}&idpessoa=${idproduto}`);
+    return this.http.get(`analytics/getAllConsumerByProduct?doID=${this.coockieService.get(EnumCookie.DOID)}&idproduto=${idproduto}`);
   }
 
   public getBirthdaysWeek() : Observable<any> {
