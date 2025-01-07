@@ -18,6 +18,7 @@ import {Ripple} from "primeng/ripple";
 import { TabsModule } from 'primeng/tabs';
 import {DropdownComponent} from "../components/inputs/dropdown/dropdown.component";
 import {InputDateComponent} from "../components/inputs/input-date/input-date.component";
+import {InputNumberComponent} from "../components/inputs/input-number/input-number.component";
 
 
 
@@ -30,7 +31,8 @@ import {InputDateComponent} from "../components/inputs/input-date/input-date.com
     InputTextComponent,
     DropdownComponent,
     Ripple,
-    InputDateComponent
+    InputDateComponent,
+    InputNumberComponent
   ],
   exports: [
     NgIf,
@@ -53,7 +55,8 @@ import {InputDateComponent} from "../components/inputs/input-date/input-date.com
     Ripple,
     TabsModule,
     DropdownComponent,
-    InputDateComponent
+    InputDateComponent,
+    InputNumberComponent
   ]
 })
 export class SharedCommonModule { }

@@ -42,6 +42,7 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
 
   @Input() optionLabel: string = "";
   @Input() route: string = "";
+  @Input() typeExplorer: number = 1;
 
   @Input() defaultFilter: string = "";
 
@@ -71,6 +72,7 @@ export class AutoCompleteComponent extends AppControlValueAccessor{
   //
   onRequestData(value: any): DynamicQuery{
     let req = new DynamicQuery();
+    req.type = this.typeExplorer;
     req.limit = 5;
     req.page = 1;
     req.route = this.route;

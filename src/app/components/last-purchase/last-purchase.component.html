@@ -4,78 +4,58 @@
   (_onFilter)="onLoadFilter()"
   context="Consumo de clientes" >
   <div class="formgrid grid" fields>
+    <app-input-number
+      label="Data Ultima compra(em meses)"
+      [minFractionDigits]="0"
+      [maxlength]="2"
+      class="c-margin col-12 md:col-12">
+    </app-input-number>
     <app-dropdown
-      label="Ativo"
+      label="Frequencia de compra"
       optionLabel="value"
       class="c-margin col-12 md:col-12"
-      [options]="_uesNo">
+      [options]="_purchaseFrequency">
     </app-dropdown>
+    <app-input-number
+      label="Valor total gasto"
+      [minFractionDigits]="2"
+      [maxlength]="10"
+      class="c-margin col-12 md:col-12">
+    </app-input-number>
     <app-auto-complete
       class="c-margin col-12 md:col-12"
-      label="Classificação"
+      label="Grupo de produtos consumidos"
       type="text"
-      route="Pes_win_Pessoa_fieldClass"
+      route="Prod_win_fieldIDGrupo"
       optionLabel="DESCRICAO">
     </app-auto-complete>
-    <app-dropdown
-      label="Mostrar clientes com anumais inativos"
-      optionLabel="value"
-      class="c-margin col-12 md:col-12"
-      [options]="_uesNo">
-    </app-dropdown>
-    <app-auto-complete
-      class="c-margin col-12 md:col-6"
-      label="Cidade"
-      type="text"
-      route="Pes_win_Pessoa_fieldCidadeResidencial"
-      optionLabel="NOME">
-    </app-auto-complete>
-    <app-auto-complete
-      class="c-margin col-12 md:col-6"
-      label="Estado"
-      type="text"
-      route="Pes_win_Filter_f34"
-      optionLabel="NOME">
-    </app-auto-complete>
-    <app-dropdown
-      label="Vendas"
-      optionLabel="value"
-      class="c-margin col-12 md:col-12"
-      [options]="_clientsNotSale">
-    </app-dropdown>
+    <app-input-number
+      label="Quantidade de produtos consumidos"
+      [minFractionDigits]="0"
+      [maxlength]="10"
+      class="c-margin col-12 md:col-12">
+    </app-input-number>
+    <app-input-number
+      label="Desconto obtido"
+      [minFractionDigits]="2"
+      [maxlength]="2"
+      class="c-margin col-12 md:col-12">
+    </app-input-number>
+    <app-input-number
+      label="Segmentação valor unitario"
+      [minFractionDigits]="2"
+      [maxlength]="10"
+      class="c-margin col-12 md:col-12">
+    </app-input-number>
     <app-auto-complete
       class="c-margin col-12 md:col-12"
-      label="Produto/Serviço"
+      label="Forma pagamento"
       type="text"
-      route="NFeProd_win_fieldProduto"
-      optionLabel="DESCRIÇÃO">
+      [typeExplorer]="0"
+      route="mnuCadastros_vendas_mnuFormaPgto"
+      optionLabel="DESCRICAO">
     </app-auto-complete>
-    <app-auto-complete
-      class="c-margin col-12 md:col-12"
-      label="Grupo/Sub-grupo"
-      type="text"
-      route="w24f3"
-      optionLabel="DESCRIÇÃO">
-    </app-auto-complete>
-    <app-auto-complete
-      class="c-margin col-12 md:col-12"
-      label="Marca"
-      type="text"
-      route="Prod_win_fieldIDMarca"
-      optionLabel="DESCRIÇÃO">
-    </app-auto-complete>
-    <app-dropdown
-      label="Clientes que:"
-      optionLabel="value"
-      class="c-margin col-12 md:col-12"
-      [options]="_clientsWhat">
-    </app-dropdown>
-    <app-dropdown
-      label="Com faturamento"
-      optionLabel="value"
-      class="c-margin col-12 md:col-12"
-      [options]="_clientsinvoicing">
-    </app-dropdown>
+    <div class="c-margin col-12 md:col-12">Periodo de compras:</div>
     <app-input-date
       class="c-margin col-12 md:col-6"
       label="De">

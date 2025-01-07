@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FloatLabelModule} from "primeng/floatlabel";
 import {FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -33,5 +33,9 @@ import {AppControlValueAccessor} from "../app-control-value";
   styleUrl: './input-number.component.scss'
 })
 export class InputNumberComponent extends AppControlValueAccessor{
+
+  @Input() minFractionDigits: number = 2;
+  @Input() maxFractionDigits: number = 5;
+  @Input() maxlength: number = 10;
 
 }

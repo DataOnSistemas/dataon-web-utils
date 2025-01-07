@@ -23,3 +23,9 @@ export const clientsinvoicing: any[] = [
   { key: 2, value: "Sem Faturamento em aberto" },
 ]
 
+export const purchaseFrequency: any[] = [
+  { key: 0, value: "(Todos)" },
+  { key: 1, value: "Semanalmente" },
+  { key: 2, value: "Mensalmente" },
+]
+

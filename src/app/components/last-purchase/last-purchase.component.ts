@@ -10,7 +10,7 @@ import {LoadingService} from "../../shared/services/loading/loading.service";
 import {ButtonsHeaderComponent} from "../../shared/components/buttons-header/buttons-header.component";
 import {LastPurchaseProductsComponent} from "../last-purchase-products/last-purchase-products.component";
 import {ActionsService} from "../../services/actions/actions.service";
-import {clientsinvoicing, clientsNotSale, clientsWhat, yesNo} from "../../shared/common/constants";
+import {clientsinvoicing, clientsNotSale, clientsWhat, purchaseFrequency, yesNo} from "../../shared/common/constants";
 import {Drawer} from "primeng/drawer";
 import {TableModule} from "primeng/table";
 
@@ -34,7 +34,11 @@ import {TableModule} from "primeng/table";
 })
 export class LastPurchaseComponent extends BaseComponent implements OnInit {
 
+
+  protected _purchaseFrequency: any = purchaseFrequency;
+
   protected _uesNo: any = yesNo;
+
   protected _clientsNotSale: any = clientsNotSale;
   protected _clientsWhat: any = clientsWhat;
   protected _clientsinvoicing: any = clientsinvoicing;

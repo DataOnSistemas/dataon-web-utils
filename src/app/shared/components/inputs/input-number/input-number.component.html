@@ -7,10 +7,10 @@
     [pTooltip]="guidance"
     inputId="minmaxfraction"
     mode="decimal"
+    [maxlength]="maxlength"
     [disabled]="disabled"
-    pAutoFocus
     [autofocus]="focus"
-    [minFractionDigits]="2"
-    [maxFractionDigits]="5" />
+    [minFractionDigits]="minFractionDigits"
+    [maxFractionDigits]="maxFractionDigits" />
   <label id="">{{label}}</label>
 </p-floatLabel>
